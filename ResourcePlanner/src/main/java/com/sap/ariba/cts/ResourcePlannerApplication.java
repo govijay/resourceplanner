@@ -9,7 +9,4 @@ public class ResourcePlannerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ResourcePlannerApplication.class, args);
 	}
-	/*
-	 * test commit Madhan
-	 */
 }

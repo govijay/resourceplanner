@@ -16,7 +16,7 @@ import java.util.Collection;
 /**
  * Team Model.
  *
- * <p> Team Entity Class.</p>
+ * <p> Team Entity Class</p>
  *
  * @author Vijay.G
  * @version 1.0

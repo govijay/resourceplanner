@@ -23,7 +23,7 @@ import java.util.Date;
  * BaseEntity Class.
  *
  * <p> This Base Entity class holds generic fields like Id,version,
- * active, createddate, lastmodifieddate for other master data objects </p>
+ * active, createddate, lastmodifieddate for other master data objects. </p>
  *
  * @author Vijay.G
  * @version 1.0

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 /**
  * Sub Team Model.
  *
- * <p> Sub Team Entity Class.</p>
+ * <p> Sub Team Entity Class</p>
  *
  * @author Vijay.G
  * @version 1.0

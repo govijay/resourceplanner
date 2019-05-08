@@ -14,7 +14,7 @@ import java.util.Collection;
 /**
  * Region Model.
  *
- * <p> Region Entity Class.</p>
+ * <p> Region Entity Class</p>
  *
  * @author Vijay.G
  * @version 1.0

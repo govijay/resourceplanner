@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 /**
  * City Model.
  *
- * <p> City Entity Class.</p>
+ * <p> City Entity Class</p>
  *
  * @author Vijay.G
  * @version 1.0

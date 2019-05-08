@@ -16,7 +16,7 @@ import java.util.Collection;
 /**
  * Country Model.
  *
- * <p> Country Entity Class.</p>
+ * <p> Country Entity Class</p>
  *
  * @author Vijay.G
  * @version 1.0

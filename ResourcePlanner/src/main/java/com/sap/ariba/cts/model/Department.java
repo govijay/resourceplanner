@@ -16,7 +16,7 @@ import java.util.Collection;
 /**
  * Department Model.
  *
- * <p> Department Entity Class.</p>
+ * <p> Department Entity Class</p>
  *
  * @author Vijay.G
  * @version 1.0

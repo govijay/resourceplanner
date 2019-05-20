@@ -1,10 +1,10 @@
-package com.sap.ariba.cts.repo;
+package com.sap.ariba.cts.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sap.ariba.cts.model.UserInfo;
+import com.sap.ariba.cts.model.entity.UserInfo;
 
 /**
  * 
@@ -12,6 +12,6 @@ import com.sap.ariba.cts.model.UserInfo;
  */
 @Repository
 @Transactional
-public interface UserInfoRepo extends JpaRepository<UserInfo, String> {
+public interface UserInfoRepository extends JpaRepository<UserInfo, String> {
 
 }

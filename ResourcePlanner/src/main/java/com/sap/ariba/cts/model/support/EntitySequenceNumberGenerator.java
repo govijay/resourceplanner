@@ -10,8 +10,7 @@ import org.hibernate.type.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Strings;
-import com.sap.ariba.cts.model.BaseEntity;
+import com.sap.ariba.cts.model.base.BaseEntity;
 
 import java.io.Serializable;
 import java.util.Properties;
@@ -27,7 +26,7 @@ public class EntitySequenceNumberGenerator extends SequenceStyleGenerator {
   // Logging
   private static Logger logger = LoggerFactory.getLogger(EntitySequenceNumberGenerator.class);
 
-  private String classCode;
+  private String valuePrefix;
 
   /**
    * {@inheritDoc}
@@ -37,7 +36,6 @@ public class EntitySequenceNumberGenerator extends SequenceStyleGenerator {
   @Override
   public void configure(Type type, Properties params, ServiceRegistry serviceRegistry) throws MappingException {
     super.configure(LongType.INSTANCE, params, serviceRegistry);
-
   }
 
   /**
@@ -47,14 +45,9 @@ public class EntitySequenceNumberGenerator extends SequenceStyleGenerator {
    */
   @Override
   public Serializable generate(SharedSessionContractImplementor session, Object obj) throws HibernateException {
-
-    classCode = getObjectClassCode(obj);
-
-    if (Strings.isNullOrEmpty(classCode)) {
-      return classCode + super.generate(session, obj);
-    } else {
-      return super.generate(session, obj);
-    }
+    valuePrefix = getObjectClassCode(obj);
+    logger.info(valuePrefix);
+    return valuePrefix + "_" + super.generate(session, obj);
   }
 
   /**
@@ -75,7 +68,10 @@ public class EntitySequenceNumberGenerator extends SequenceStyleGenerator {
               "The Specified Object is not derived from RootElement!");
     }
     objCode = ((BaseEntity) obj).getClassCode();
+
+    logger.info("Class Code", objCode);
     return objCode;
   }
+
 
 }

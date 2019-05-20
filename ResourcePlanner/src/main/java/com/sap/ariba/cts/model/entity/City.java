@@ -1,6 +1,5 @@
-package com.sap.ariba.cts.model;
+package com.sap.ariba.cts.model.entity;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,9 +13,10 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
-import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
-import com.sap.ariba.cts.model.support.ClassMetaProperty;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sap.ariba.cts.model.base.BaseEntity;
 
 /**
  * City Model.
@@ -27,9 +27,23 @@ import com.sap.ariba.cts.model.support.ClassMetaProperty;
  * @version $Id : $
  */
 @Entity
-@Table(name = "CITY")
-@ClassMetaProperty(code = "CTY")
+@Table(name = "CITIES")
 public class City extends BaseEntity {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "citySequenceGenerator")
+  @GenericGenerator(name = "citySequenceGenerator",
+          strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+          parameters = {
+                  @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "city_seq"),
+                  @Parameter(name = SequenceStyleGenerator.CONFIG_SEQUENCE_PER_ENTITY_SUFFIX, value = "_CTY"),
+                  @Parameter(name = SequenceStyleGenerator.CONFIG_PREFER_SEQUENCE_PER_ENTITY, value = "true"),
+                  @Parameter(name = SequenceStyleGenerator.INITIAL_PARAM, value = "1000"),
+                  @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1")
+          })
+  @Column(name = "BASE_ID")
+  private String baseId;
+
 
   @Column(name = "CITY_CODE",unique = true)
   @NotBlank
@@ -40,39 +54,14 @@ public class City extends BaseEntity {
   private String cityName;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "COUNTRY_CODE", nullable = false)
-  private Country country;
+  @JoinColumn(name = "COUNTRY_BASEID")
+  @JsonBackReference
+  private Country countryBaseId;
 
   /**
    * Instantiates a new City.
    */
-  public City() {
-  }
-
-  /**
-   * Instantiates a new City.
-   *
-   * @param cityCode the city code
-   * @param cityName the city name
-   * @param country  the country
-   */
-  public City(@NotBlank String cityCode, @NotBlank String cityName, Country country) {
-    this.cityCode = cityCode;
-    this.cityName = cityName;
-    this.country = country;
-  }
-
-  @Override
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ctrySequenceGenerator")
-  @GenericGenerator(name = "ctrySequenceGenerator",
-          strategy = "com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator",
-          parameters = {
-                  @Parameter(name = EntitySequenceNumberGenerator.SEQUENCE_PARAM, value = "ctry_seq"),
-                  @Parameter(name = EntitySequenceNumberGenerator.INITIAL_PARAM, value = "1000"),
-                  @Parameter(name = EntitySequenceNumberGenerator.INCREMENT_PARAM, value = "1")
-          })
-  public String getBaseId() {
-    return super.getBaseId();
+  protected City() {
   }
 
   /**
@@ -117,15 +106,25 @@ public class City extends BaseEntity {
    * @return the country
    */
   public Country getCountry() {
-    return country;
+    return countryBaseId;
   }
 
   /**
    * Sets country.
    *
-   * @param country the country
+   * @param countryBaseId the country
    */
-  public void setCountry(Country country) {
-    this.country = country;
+  public void setCountry(Country countryBaseId) {
+    this.countryBaseId = countryBaseId;
+  }
+
+
+  @Override
+  public String toString() {
+    return "City{" +
+            "baseId='" + baseId + '\'' +
+            ", cityCode='" + cityCode + '\'' +
+            ", cityName='" + cityName + '\'' +
+            '}';
   }
 }

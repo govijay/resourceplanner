@@ -1,21 +1,21 @@
-package com.sap.ariba.cts.model;
+package com.sap.ariba.cts.model.base;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
 
 import java.io.Serializable;
@@ -23,6 +23,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Base Object.
@@ -34,13 +35,13 @@ import java.util.Date;
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity implements BaseEntityInterface, Cloneable, Serializable {
+@JsonIgnoreProperties(
+        value = {"createdOn", "lastModified"},
+        allowGetters = true
+)
+public abstract class BaseEntity implements Cloneable, Serializable {
 
   private static final long serialVersionUID = 1L;
-
-  @Id
-  @Column(name = "BASE_ID")
-  private String baseId;
 
   @Version
   private Integer version;
@@ -58,23 +59,19 @@ public abstract class BaseEntity implements BaseEntityInterface, Cloneable, Seri
   @Column(name = "ACTIVE")
   private boolean active;
 
-
   /**
-   * Gets base id.
-   *
-   * @return the base id
+   * Instantiates a new Base entity.
    */
-  public String getBaseId() {
-    return this.baseId;
+  public BaseEntity() {
   }
 
   /**
-   * Sets base id.
+   * Instantiates a new Base entity.
    *
-   * @param rootId the root id
+   * @param active the active
    */
-  public void setBaseId(String rootId) {
-    this.baseId = rootId;
+  public BaseEntity(boolean active) {
+    this.active = active;
   }
 
   /**
@@ -154,8 +151,6 @@ public abstract class BaseEntity implements BaseEntityInterface, Cloneable, Seri
    *
    * @return String Name of the Table annotated on the Entity Object.
    */
-  @Transient
-  @Override
   public String getTableName() {
     Table tableAnnotation = this.getClass().getAnnotation(Table.class);
     return tableAnnotation == null ? null : tableAnnotation.name();
@@ -189,5 +184,33 @@ public abstract class BaseEntity implements BaseEntityInterface, Cloneable, Seri
     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
       return null;
     }
+  }
+
+  /**
+   * On pre persist.
+   */
+  @PrePersist
+  public void onPrePersist() {
+    audit("INSERT");
+  }
+
+  private void audit(String operation) {
+    setActive(true);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    BaseEntity that = (BaseEntity) o;
+    return active == that.active &&
+            Objects.equals(version, that.version) &&
+            Objects.equals(createdOn, that.createdOn) &&
+            Objects.equals(lastModified, that.lastModified);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(version, createdOn, lastModified, active);
   }
 }

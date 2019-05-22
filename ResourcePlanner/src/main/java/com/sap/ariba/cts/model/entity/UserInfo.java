@@ -1,10 +1,10 @@
-package com.sap.ariba.cts.model;
-
-import java.util.Date;
+package com.sap.ariba.cts.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import java.util.Date;
 
 
 /**

@@ -11,15 +11,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.dto.TeamDto;
+import com.sap.ariba.cts.model.support.ClassMetaProperty;
+import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
 import java.util.Collection;
 
@@ -33,18 +37,18 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "TEAMS")
+@ClassMetaProperty(code = "TM")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Team extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "teamSequenceGenerator")
   @GenericGenerator(name = "teamSequenceGenerator",
-          strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+          strategy = "com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator",
           parameters = {
-                  @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "team_seq"),
-                  @Parameter(name = SequenceStyleGenerator.CONFIG_SEQUENCE_PER_ENTITY_SUFFIX, value = "_TM"),
-                  @Parameter(name = SequenceStyleGenerator.CONFIG_PREFER_SEQUENCE_PER_ENTITY, value = "true"),
-                  @Parameter(name = SequenceStyleGenerator.INITIAL_PARAM, value = "1000"),
-                  @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1")
+                  @Parameter(name = EntitySequenceNumberGenerator.SEQUENCE_PARAM, value = "team_seq"),
+                  @Parameter(name = EntitySequenceNumberGenerator.INITIAL_PARAM, value = "1000"),
+                  @Parameter(name = EntitySequenceNumberGenerator.INCREMENT_PARAM, value = "1")
           })
   @Column(name = "BASE_ID")
   private String baseId;
@@ -60,7 +64,10 @@ public class Team extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "DEPART_BASEID")
   @JsonBackReference
-  private Department departmentBaseId;
+  private Department department;
+
+  @Transient
+  private String departmentBaseId;
 
   @OneToMany(mappedBy = "teamBaseId", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JsonManagedReference
@@ -70,6 +77,20 @@ public class Team extends BaseEntity {
    * Instantiates a new Team.
    */
   protected Team() {
+  }
+
+  /**
+   * Instantiates a new Base entity.
+   *
+   * @param active the active
+   */
+  public Team(String baseId ,boolean active, @NotBlank String teamCode, @NotBlank String teamName,String departmentBaseId) {
+    super(active);
+    this.baseId = baseId;
+    this.teamCode = teamCode;
+    this.teamName = teamName;
+    this.departmentBaseId = departmentBaseId;
+
   }
 
   /**
@@ -132,7 +153,7 @@ public class Team extends BaseEntity {
    * @return the department
    */
   public Department getDepartment() {
-    return departmentBaseId;
+    return department;
   }
 
   /**
@@ -141,7 +162,15 @@ public class Team extends BaseEntity {
    * @param department the department
    */
   public void setDepartment(Department department) {
-    this.departmentBaseId = department;
+    this.department = department;
+  }
+
+  public String getDepartmentBaseId() {
+    return departmentBaseId;
+  }
+
+  public void setDepartmentBaseId(String departmentBaseId) {
+    this.departmentBaseId = departmentBaseId;
   }
 
   /**
@@ -168,7 +197,20 @@ public class Team extends BaseEntity {
             "baseId='" + baseId + '\'' +
             ", teamCode='" + teamCode + '\'' +
             ", teamName='" + teamName + '\'' +
-            ", departmentBaseId=" + departmentBaseId +
+            ", department=" + department +
             '}';
   }
+
+  public static Team toEntity(TeamDto teamDto){
+      Team team = new Team(
+              teamDto.getBaseId(),
+              teamDto.isActive(),
+              teamDto.getTeamCode(),
+              teamDto.getTeamName(),
+              teamDto.getDepartmentBaseId()
+      );
+
+      return team;
+  }
+
 }

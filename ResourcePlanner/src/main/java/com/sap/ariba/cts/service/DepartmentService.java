@@ -25,64 +25,28 @@ public interface DepartmentService {
    *
    * @param dept the dept
    */
-  void createDepartment(Department dept);
+  Department createDepartment(Department dept);
 
   /**
    * Update department.
    *
    * @param dept the dept
    */
-  void updateDepartment(Department dept);
+  Department updateDepartment(Department dept);
 
-  /**
-   * Deactivate department.
-   *
-   * @param deptCode   the dept code
-   * @param regionCode the region code
-   */
-  void deactivateDepartment(String deptCode, String regionCode);
 
-  /**
-   * Reactivate department.
-   *
-   * @param deptCode   the dept code
-   * @param regionCode the region code
-   */
-  void reactivateDepartment(String deptCode, String regionCode);
+  Department deactivateDepartment(String baseId);
 
-  /**
-   * Delete department.
-   *
-   * @param deptCode   the dept code
-   * @param regionCode the region code
-   */
-  void deleteDepartment(String deptCode, String regionCode);
 
-  /**
-   * Gets department by code.
-   *
-   * @param deptCode   the dept code
-   * @param regionCode the region code
-   * @return the department by code
-   */
-  Department getDepartmentByCode(String deptCode, String regionCode);
+  Department reactivateDepartment(String baseId);
 
-  /**
-   * Gets region by dept code.
-   *
-   * @param deptCode the dept code
-   * @return the region by dept code
-   */
-  List<Region> getRegionByDeptCode(String deptCode);
+  Boolean deleteDepartment(String baseId);
 
-  /**
-   * Gets department name by code.
-   *
-   * @param deptCode   the dept code
-   * @param regionCode the region code
-   * @return the department name by code
-   */
-  String getDepartmentNameByCode(String deptCode, String regionCode);
+
+  Department getDepartmentByBaseId(String baseId);
+
+
+  Region getRegionByDeptBaseId(String baseId);
 
   /**
    * Gets departments.
@@ -91,21 +55,12 @@ public interface DepartmentService {
    */
   List<Department> getDepartments();
 
-  /**
-   * Gets department by region code.
-   *
-   * @param regionCode the region code
-   * @return the department by region code
-   */
-  List<Department> getDepartmentByRegionCode(String regionCode);
 
-  /**
-   * Is department active boolean.
-   *
-   * @param deptCode   the dept code
-   * @param regionCode the region code
-   * @return the boolean
-   */
-  boolean isDepartmentActive(String deptCode, String regionCode);
+  List<Department> getDepartmentsByRegionBaseId(String regionBaseId);
+
+
+  Boolean isDepartmentActive(String baseId);
+
+  Boolean isDepartmentExists(String baseId);
 
 }

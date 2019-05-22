@@ -18,10 +18,12 @@ import org.hibernate.annotations.Parameter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.dto.RegionDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
 import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -61,7 +63,7 @@ public class Region extends BaseEntity implements Serializable {
   @NotBlank
   private String regionName;
 
-  @OneToMany(mappedBy = "regionBaseId", fetch = FetchType.LAZY, orphanRemoval = false)
+  @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, orphanRemoval = false)
   @JsonManagedReference
   private Collection<Department> departments;
 
@@ -76,6 +78,13 @@ public class Region extends BaseEntity implements Serializable {
     super();
   }
 
+
+  public Region(String baseId,boolean active, @NotBlank String regionCode, @NotBlank String regionName) {
+    super(active);
+    this.baseId = baseId;
+    this.regionCode = regionCode;
+    this.regionName = regionName;
+  }
 
   /**
    * Gets base id.
@@ -183,5 +192,21 @@ public class Region extends BaseEntity implements Serializable {
             ", regionCode='" + regionCode + '\'' +
             ", regionName='" + regionName + '\'' +
             '}';
+  }
+
+  public static Region toEntity(RegionDto regionDto) {
+    Region region =  new Region(
+            regionDto.getBaseId(),
+            regionDto.isActive(),
+            regionDto.getRegionCode(),
+            regionDto.getRegionName());
+
+    if(regionDto.getDepartmentDtoList()!= null){
+      region.setDepartments(new ArrayList(regionDto.getDepartmentDtoList()));
+    }
+    if(regionDto.getCountryDtoList() != null){
+      region.setCountries(new ArrayList(regionDto.getCountryDtoList()));
+    }
+    return region;
   }
 }

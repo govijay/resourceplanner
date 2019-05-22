@@ -13,10 +13,12 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.support.ClassMetaProperty;
+import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
 /**
  * City Model.
@@ -28,18 +30,18 @@ import com.sap.ariba.cts.model.base.BaseEntity;
  */
 @Entity
 @Table(name = "CITIES")
+@ClassMetaProperty(code = "CTY")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class City extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "citySequenceGenerator")
   @GenericGenerator(name = "citySequenceGenerator",
-          strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+          strategy = "com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator",
           parameters = {
-                  @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "city_seq"),
-                  @Parameter(name = SequenceStyleGenerator.CONFIG_SEQUENCE_PER_ENTITY_SUFFIX, value = "_CTY"),
-                  @Parameter(name = SequenceStyleGenerator.CONFIG_PREFER_SEQUENCE_PER_ENTITY, value = "true"),
-                  @Parameter(name = SequenceStyleGenerator.INITIAL_PARAM, value = "1000"),
-                  @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1")
+                  @Parameter(name = EntitySequenceNumberGenerator.SEQUENCE_PARAM, value = "city_seq"),
+                  @Parameter(name = EntitySequenceNumberGenerator.INITIAL_PARAM, value = "1000"),
+                  @Parameter(name = EntitySequenceNumberGenerator.INCREMENT_PARAM, value = "1")
           })
   @Column(name = "BASE_ID")
   private String baseId;
@@ -62,6 +64,22 @@ public class City extends BaseEntity {
    * Instantiates a new City.
    */
   protected City() {
+  }
+
+  public String getBaseId() {
+    return baseId;
+  }
+
+  public void setBaseId(String baseId) {
+    this.baseId = baseId;
+  }
+
+  public Country getCountryBaseId() {
+    return countryBaseId;
+  }
+
+  public void setCountryBaseId(Country countryBaseId) {
+    this.countryBaseId = countryBaseId;
   }
 
   /**
@@ -99,25 +117,6 @@ public class City extends BaseEntity {
   public void setCityName(String cityName) {
     this.cityName = cityName;
   }
-
-  /**
-   * Gets country.
-   *
-   * @return the country
-   */
-  public Country getCountry() {
-    return countryBaseId;
-  }
-
-  /**
-   * Sets country.
-   *
-   * @param countryBaseId the country
-   */
-  public void setCountry(Country countryBaseId) {
-    this.countryBaseId = countryBaseId;
-  }
-
 
   @Override
   public String toString() {

@@ -13,6 +13,7 @@ import com.sap.ariba.cts.service.RegionService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The type Region service.
@@ -35,71 +36,65 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public void createRegion(Region region) {
-    Region regionPersisted = regionRepo.getRegionByRegionCode(region.getRegionCode());
-
-    if (regionPersisted == null) {
-      regionRepo.save(region);
-    }
+  public Region createRegion(Region region) {
+    regionRepo.save(region);
+    return (Region) regionRepo.findById(region.getBaseId()).get();
   }
 
   @Override
-  public void updateRegion(Region region) {
-    Region regionToUpdate = regionRepo.getRegionByRegionCode(region.getRegionCode());
+  public Region updateRegion(Region region) {
+    Region regionToUpdate = regionRepo.getRegionByBaseId(region.getBaseId());
 
     if (regionToUpdate != null) {
+      regionToUpdate.setRegionCode(region.getRegionCode());
       regionToUpdate.setRegionName(region.getRegionName());
+      regionToUpdate.setActive(region.isActive());
       regionRepo.save(regionToUpdate);
     }
+    return (Region) regionRepo.findById(regionToUpdate.getBaseId()).get();
   }
 
   @Override
-  public void deactivateRegion(String regionCode) {
-    Region regionToDeactivate = regionRepo.getRegionByRegionCode(regionCode);
+  public Region deactivateRegion(String baseId) {
+    Region regionToDeactivate = regionRepo.getRegionByBaseId(baseId);
     if (regionToDeactivate != null) {
       regionToDeactivate.setActive(false);
       regionRepo.save(regionToDeactivate);
     }
+    return (Region) regionRepo.findById(regionToDeactivate.getBaseId()).get();
   }
 
   @Override
-  public void reactivateRegion(String regionCode) {
-    Region regionToReactivate = regionRepo.getRegionByRegionCode(regionCode);
+  public Region reactivateRegion(String baseId) {
+    Region regionToReactivate = regionRepo.getRegionByBaseId(baseId);
     if (regionToReactivate != null) {
       regionToReactivate.setActive(true);
       regionRepo.save(regionToReactivate);
     }
+    return (Region) regionRepo.findById(regionToReactivate.getBaseId()).get();
   }
 
   @Override
-  public void deleteRegion(String regionCode) {
-    Region regionToHardDelete = regionRepo.getRegionByRegionCode(regionCode);
+  public Boolean deleteRegion(String baseId) {
+    Region regionToHardDelete = (Region) regionRepo.findById(baseId).get();
     regionRepo.delete(regionToHardDelete);
     if (regionToHardDelete != null) {
       Collection<Department> departmentSet = (Collection<Department>) regionToHardDelete.getDepartments();
       if (!departmentSet.isEmpty()) {
         for (Department dept : departmentSet) {
-          dept.setRegionBaseId(null);
+          dept.setRegion(null);
         }
       }
     }
-  }
-
-
-  @Override
-  public Region getRegionByCode(String regionCode) {
-    return regionRepo.getRegionByRegionCode(regionCode);
+    return true;
   }
 
   @Override
-  public String getRegionNameByRegionCode(String regionCode) {
-
-    Region regionForName = regionRepo.getRegionByRegionCode(regionCode);
-    if (regionForName != null) {
-      return regionForName.getRegionName();
-    }
-    return null;
+  public Region getRegionByBaseId(String baseId) {
+    return (Region) regionRepo.findById(baseId).get();
   }
+
+
 
   @Override
   public List<Region> getRegions() {
@@ -107,15 +102,18 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public boolean isRegionActive(String regionCode) {
-    Region region = regionRepo.getRegionByRegionCode(regionCode);
-    return region != null && region.isActive();
+  public boolean isRegionActive(String baseId) {
+    Optional<Region> regionOpt =  regionRepo.findById(baseId);
+    if (regionOpt.isPresent()){
+      return regionOpt.get().isActive();
+    }
+    return false;
   }
 
   @Override
-  public boolean isRegionExists(String regionCode) {
-    Region region = regionRepo.getRegionByRegionCode(regionCode);
-    if (region != null) return true;
+  public boolean isRegionExists(String baseId) {
+    Optional<Region> regionOpt =  regionRepo.findById(baseId);
+    if (regionOpt.isPresent()) return true;
     return false;
   }
 }

@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.dto.DepartmentDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
 import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
@@ -63,9 +65,12 @@ public class Department extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "REGION_BASEID", nullable = true)
   @JsonBackReference
-  private Region regionBaseId;
+  private Region region;
 
-  @OneToMany(mappedBy = "departmentBaseId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @Transient
+  private String regionBaseId;
+
+  @OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JsonManagedReference
   private Collection<Team> teams;
 
@@ -75,6 +80,18 @@ public class Department extends BaseEntity {
   protected Department() {
   }
 
+  /**
+   * Instantiates a new Base entity.
+   *
+   * @param active the active
+   */
+  public Department(boolean active,String baseId, @NotBlank String departCode, @NotBlank String departName,String regionBaseId) {
+    super(active);
+    this.baseId = baseId;
+    this.departCode = departCode;
+    this.departName = departName;
+    this.regionBaseId = regionBaseId;
+  }
 
   /**
    * Gets base id.
@@ -135,16 +152,25 @@ public class Department extends BaseEntity {
    *
    * @return the region base id
    */
-  public Region getRegionBaseId() {
-    return regionBaseId;
+  public Region getRegion() {
+    return region;
   }
 
   /**
    * Sets region base id.
    *
-   * @param regionBaseId the region base id
+   * @param region the region base id
    */
-  public void setRegionBaseId(Region regionBaseId) {
+  public void setRegion(Region region) {
+    this.region = region;
+  }
+
+
+  public String getRegionBaseId() {
+    return regionBaseId;
+  }
+
+  public void setRegionBaseId(String regionBaseId) {
     this.regionBaseId = regionBaseId;
   }
 
@@ -181,5 +207,15 @@ public class Department extends BaseEntity {
             ", departCode='" + departCode + '\'' +
             ", departName='" + departName + '\'' +
             '}';
+  }
+
+  public static Department toEntity(DepartmentDto departmentDto) {
+    return new Department(
+            departmentDto.isActive(),
+            departmentDto.getBaseId(),
+            departmentDto.getDeptCode(),
+            departmentDto.getDeptName(),
+            departmentDto.getRegionId());
+
   }
 }

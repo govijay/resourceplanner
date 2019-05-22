@@ -13,10 +13,12 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.support.ClassMetaProperty;
+import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
 /**
  * Sub Team Model.
@@ -28,18 +30,18 @@ import com.sap.ariba.cts.model.base.BaseEntity;
  */
 @Entity
 @Table(name = "SUB_TEAMS")
+@ClassMetaProperty(code = "ST")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SubTeam extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subteamSequenceGenerator")
   @GenericGenerator(name = "subteamSequenceGenerator",
-          strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+          strategy = "com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator",
           parameters = {
-                  @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "sub_team_seq"),
-                  @Parameter(name = SequenceStyleGenerator.CONFIG_SEQUENCE_PER_ENTITY_SUFFIX, value = "_STM"),
-                  @Parameter(name = SequenceStyleGenerator.CONFIG_PREFER_SEQUENCE_PER_ENTITY, value = "true"),
-                  @Parameter(name = SequenceStyleGenerator.INITIAL_PARAM, value = "1000"),
-                  @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1")
+                  @Parameter(name = EntitySequenceNumberGenerator.SEQUENCE_PARAM, value = "subteam_seq"),
+                  @Parameter(name = EntitySequenceNumberGenerator.INITIAL_PARAM, value = "1000"),
+                  @Parameter(name = EntitySequenceNumberGenerator.INCREMENT_PARAM, value = "1")
           })
   @Column(name = "BASE_ID")
   private String baseId;

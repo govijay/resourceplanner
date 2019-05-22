@@ -23,68 +23,53 @@ public interface RegionService {
    * Create region.
    *
    * @param region the region
+   * @return
    */
-  void createRegion(Region region);
+  Region createRegion(Region region);
 
   /**
    * Update region.
    *
    * @param region the region
    */
-  void updateRegion(Region region);
+  Region updateRegion(Region region);
 
   /**
    * Deactivate region.
    *
    * @param regionCode the region code
    */
-  void deactivateRegion(String regionCode);
+  Region deactivateRegion(String regionCode);
 
   /**
    * Reactivate region.
    *
    * @param regionCode the region code
    */
-  void reactivateRegion(String regionCode);
+  Region reactivateRegion(String regionCode);
 
   /**
    * Delete region.
    *
    * @param regionCode the region code
    */
-  void deleteRegion(String regionCode);
+  Boolean deleteRegion(String regionCode);
 
-  /**
-   * Is region active boolean.
-   *
-   * @param regionCode the region code
-   * @return the boolean
-   */
-  boolean isRegionActive(String regionCode);
+
+  boolean isRegionActive(String baseId);
 
   /**
    * Is region exists boolean.
    *
-   * @param regionCode the region code
+   * @param baseId the region code
    * @return the boolean
    */
-  boolean isRegionExists(String regionCode);
+  boolean isRegionExists(String baseId);
 
-  /**
-   * Gets region by code.
-   *
-   * @param regionCode the region code
-   * @return the region by code
-   */
-  Region getRegionByCode(String regionCode);
 
-  /**
-   * Gets region name by region code.
-   *
-   * @param regionCode the region code
-   * @return the region name by region code
-   */
-  String getRegionNameByRegionCode(String regionCode);
+  Region getRegionByBaseId(String baseId);
+
+
 
   /**
    * Gets regions.

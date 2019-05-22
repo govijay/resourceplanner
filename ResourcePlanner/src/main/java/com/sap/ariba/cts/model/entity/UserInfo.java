@@ -2,7 +2,15 @@ package com.sap.ariba.cts.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
@@ -12,78 +20,56 @@ import java.util.Date;
  *
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class UserInfo {
 
-	/**
-	 * variable mapped to USER_ID column in table
-	 */
+    @Version
+    private Integer version;
+    
 	@Id
 	@Column(name="USER_ID")
 	private String userId;
 
-	/**
-	 * variable mapped to FIRST_NAME column in table
-	 */
 	@Column(name="FIRST_NAME")
 	private String firstName;
 	
-	/**
-	 * variable mapped to LAST_NAME column in table
-	 */
 	@Column(name="LAST_NAME")
 	private String lastName;
 	
-	/**
-	 * variable mapped to MIDDLE_NAME column in table
-	 */
 	@Column(name="MIDDLE_NAME")
 	private String middleName;
 	
-	/**
-	 * variable mapped to EMAIL column in table
-	 */
 	@Column(name="EMAIL")
 	private String email;
 	
-	/**
-	 * variable mapped to COUNTRY_CODE column in table
-	 */
 	@Column(name="COUNTRY_CODE")
 	private Country country;
 	
-	/**
-	 * variable mapped to CITY_CODE column in table
-	 */
 	@Column(name="CITY_CODE")
 	private City city;
+
+    @Column(name = "CREATED_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date createdOn;
+
+    @Column(name = "LAST_MODIFIED")
+    @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
+    private Date lastModified;
+
+    @Column(name = "ACTIVE")
+    private boolean active;
 	
-	/**
-	 * variable mapped to IS_ACTIVE column in table
-	 */
-	@Column(name="IS_ACTIVE")
-	private boolean active;
-	//TODO 1. active flag - to think with active, inactive and purged?
-	// maybe have a field like userState that tracks above and active flag maintains user active or inactive
-	
-	//TODO - Enable after AuditListener have been tested
-	/**
-	 * variable mapped to CREATED_DATE column in table
-	 */
-	@Column(name = "CREATED_DATE")
-	//@Temporal(TemporalType.TIMESTAMP)
-	//@CreatedDate
-	private Date createdOn;
+	public Integer getVersion() {
+        return version;
+    }
 
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
-	/**
-	 * variable mapped to LAST_MODIFIED column in table
-	 */
-	@Column(name = "LAST_MODIFIED")
-	//@Temporal(TemporalType.TIMESTAMP)
-	//@LastModifiedDate
-	private Date lastModified;
-
-	public String getUserId() {
+    public String getUserId() {
 		return userId;
 	}
 

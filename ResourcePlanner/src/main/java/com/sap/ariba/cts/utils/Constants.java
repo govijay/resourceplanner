@@ -2,6 +2,8 @@ package com.sap.ariba.cts.utils;
 
 public class Constants {
 
+    private Constants() {}
+    
   // api url is /masterdata
   public static final String MASTER_DATA_URL = "/masterdata";
   // api url is /masterdata/regions
@@ -47,5 +49,6 @@ public class Constants {
   public static final String SUB_TEAM_URL = "/subteams";
   public static final String COUNTRY_URL = "/countries";
   public static final String CITY_URL = "/cities";
+  public static final String USERINFO = "/users";
 
 }

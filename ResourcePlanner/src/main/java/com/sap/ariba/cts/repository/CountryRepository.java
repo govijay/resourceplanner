@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.sap.ariba.cts.model.entity.Country;
+import com.sap.ariba.cts.model.entity.Region;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -32,27 +33,12 @@ public interface CountryRepository<T, String extends Serializable> extends BaseE
    */
   Country getCountryByBaseId(String baseId);
 
-  /**
-   * Gets country by country code.
-   *
-   * @param countryCode the country code
-   * @return the country by country code
-   */
-  Country getCountryByCountryCode(String countryCode);
-
-  /**
-   * Gets country by country name.
-   *
-   * @param countryName the country name
-   * @return the country by country name
-   */
-  Country getCountryByCountryName(String countryName);
 
   /**
    * Gets countries by region base id.
    *
-   * @param regionBaseId the region base id
+   * @param region the region base id
    * @return the countries by region base id
    */
-  Collection<Country> getCountriesByRegionBaseId(String regionBaseId);
+  Collection<Country> getCountriesByRegion(Region region);
 }

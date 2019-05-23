@@ -18,6 +18,7 @@ import org.hibernate.annotations.Parameter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.dto.RegionDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
 import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
@@ -54,18 +55,16 @@ public class Region extends BaseEntity implements Serializable {
   private String baseId;
 
   @Column(name = "REGION_CODE")
-  @NotBlank
   private String regionCode;
 
   @Column(name = "REGION_NAME")
-  @NotBlank
   private String regionName;
 
-  @OneToMany(mappedBy = "regionBaseId", fetch = FetchType.LAZY, orphanRemoval = false)
+  @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, orphanRemoval = false)
   @JsonManagedReference
   private Collection<Department> departments;
 
-  @OneToMany(mappedBy = "regionBaseId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JsonManagedReference
   private Collection<Country> countries;
 
@@ -76,6 +75,13 @@ public class Region extends BaseEntity implements Serializable {
     super();
   }
 
+
+  public Region(String baseId,boolean active, @NotBlank String regionCode, @NotBlank String regionName) {
+    super(active);
+    this.baseId = baseId;
+    this.regionCode = regionCode;
+    this.regionName = regionName;
+  }
 
   /**
    * Gets base id.
@@ -183,5 +189,14 @@ public class Region extends BaseEntity implements Serializable {
             ", regionCode='" + regionCode + '\'' +
             ", regionName='" + regionName + '\'' +
             '}';
+  }
+
+  public static Region toEntity(RegionDto regionDto) {
+    Region region =  new Region(
+            regionDto.getBaseId(),
+            regionDto.isActive(),
+            regionDto.getRegionCode(),
+            regionDto.getRegionName());
+    return region;
   }
 }

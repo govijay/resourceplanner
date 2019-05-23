@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,17 +19,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sap.ariba.cts.model.dto.RegionDto;
 import com.sap.ariba.cts.model.entity.Region;
 import com.sap.ariba.cts.service.impl.RegionServiceImpl;
 import com.sap.ariba.cts.utils.Constants;
+
+import java.util.List;
 
 /**
  * The type Region controller.
  */
 @RestController
 @RequestMapping(path = Constants.MASTER_DATA_URL,
-        consumes = "application/json",
-        produces = "application/json")
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class RegionController {
 
   private static Logger logger = LoggerFactory.getLogger(RegionController.class);
@@ -39,100 +43,88 @@ public class RegionController {
   @Autowired
   RegionServiceImpl regionService;
 
-  /**
-   * Create region response entity.
-   *
-   * @param region the region
-   * @return the response entity
-   */
-  @PostMapping(path = Constants.REGION_URL)
-  public ResponseEntity createRegion(@Valid @RequestBody Region region) {
 
-    if (!regionService.isRegionExists(region.getRegionCode())) {
-      regionService.createRegion(region);
-      return new ResponseEntity<>("Region Created", HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>("Region Exists. Use PUT Update Region", HttpStatus.BAD_REQUEST);
-    }
+  @PostMapping(path = Constants.REGION_URL)
+  public ResponseEntity<RegionDto> createRegion(@Valid @RequestBody RegionDto regionDto) {
+      Region regionCreated = regionService.createRegion(Region.toEntity(regionDto));
+      return new ResponseEntity<>(RegionDto.toDto(regionCreated), HttpStatus.OK);
   }
 
-  /**
-   * Update region response entity.
-   *
-   * @param region the region
-   * @return the response entity
-   */
+
   @PutMapping(path = Constants.REGION_URL)
-  public ResponseEntity updateRegion(@Valid @RequestBody Region region) {
-    if (regionService.isRegionActive(region.getRegionCode())) {
-      regionService.updateRegion(region);
-      return new ResponseEntity<>("Region Updated", HttpStatus.OK);
+  public ResponseEntity<RegionDto> updateRegion(@Valid @RequestBody RegionDto regionDto) {
+    if (regionService.isRegionExists(regionDto.getBaseId())) {
+
+      Region regionUpdated = regionService.updateRegion(Region.toEntity(regionDto));
+      return new ResponseEntity<>(RegionDto.toDto(regionUpdated), HttpStatus.OK);
     } else {
-      return new ResponseEntity<>("Region NOT FOUND", HttpStatus.NOT_FOUND);
+      return new ResponseEntity("Region NOT FOUND", HttpStatus.NOT_FOUND);
     }
   }
 
   /**
    * Sets status region.
    *
-   * @param code the code
+   * @param baseId the code
    * @param flag the flag
    * @return the status region
    */
   @PatchMapping(path = Constants.REGION_STATUS_SET_URL)
-  public ResponseEntity setStatusRegion(@PathVariable(name = "regionCode", required = true) @NotBlank String code,
+  public ResponseEntity<RegionDto> setStatusRegion(@PathVariable(name = "regionBaseId", required = true) @NotBlank String baseId,
                                         @PathVariable(name = "flag", required = true) boolean flag) {
-    if (regionService.isRegionActive(code) && !flag) {
-      regionService.deactivateRegion(code);
-      return new ResponseEntity<>("Region deactivated", HttpStatus.OK);
-    } else if (!regionService.isRegionActive(code) && flag) {
-      regionService.reactivateRegion(code);
-      return new ResponseEntity<>("Region reactivated", HttpStatus.OK);
+
+    Region region;
+    if (regionService.isRegionActive(baseId) && !flag) {
+      region = regionService.deactivateRegion(baseId);
+      return new ResponseEntity<>(RegionDto.toDto(region), HttpStatus.OK);
+    } else if (!regionService.isRegionActive(baseId) && flag) {
+      region = regionService.reactivateRegion(baseId);
+      return new ResponseEntity<>(RegionDto.toDto(region), HttpStatus.OK);
     }
-    return new ResponseEntity<>("Region NOT FOUND", HttpStatus.NOT_FOUND);
+    return new ResponseEntity("Region NOT FOUND", HttpStatus.NOT_FOUND);
   }
 
   /**
    * Delete region response entity.
    *
-   * @param code the code
+   * @param baseId the code
    * @return the response entity
    */
   @DeleteMapping(path = Constants.REGION_CODE_URL)
-  public ResponseEntity deleteRegion(@PathVariable(name = "regionCode", required = true) @NotBlank String code) {
-    if (regionService.getRegionByCode(code) != null) {
-      regionService.deleteRegion(code);
-      return new ResponseEntity<>("Region deleted", HttpStatus.OK);
+  public ResponseEntity<Boolean> deleteRegion(@PathVariable(name = "regionBaseId", required = true) @NotBlank String baseId) {
+    if (regionService.isRegionExists(baseId)) {
+      return new ResponseEntity<>(regionService.deleteRegion(baseId), HttpStatus.OK);
     } else {
-      return new ResponseEntity<>("Region NOT FOUND", HttpStatus.NOT_FOUND);
+      return new ResponseEntity("Region NOT FOUND", HttpStatus.NOT_FOUND);
     }
   }
 
+
   /**
-   * Gets region name by code.
+   * Gets region  by Id.
    *
-   * @param code the code
+   * @param baseId the code
    * @return the region name by code
    */
   @GetMapping(path = Constants.REGION_CODE_URL)
-  public ResponseEntity getRegionNameByCode(@PathVariable(name = "regionCode", required = true) @NotBlank String code) {
-    if (regionService.getRegionByCode(code) != null) {
-      return new ResponseEntity<>(regionService.getRegionNameByRegionCode(code), HttpStatus.OK);
+  public ResponseEntity<RegionDto> getRegionById(@PathVariable(name = "regionBaseId", required = true) @NotBlank String baseId) {
+    if (regionService.isRegionExists(baseId))  {
+      return new ResponseEntity<>(RegionDto.toDto(regionService.getRegionByBaseId(baseId)), HttpStatus.OK);
     } else {
-      return new ResponseEntity<>("Region NOT FOUND", HttpStatus.NOT_FOUND);
+      return new ResponseEntity("Region NOT FOUND", HttpStatus.NOT_FOUND);
     }
   }
 
   /**
    * Is region active response entity.
    *
-   * @param code the code
+   * @param baseId the code
    * @return the response entity
    */
   @GetMapping(path = Constants.REGION_STATUS_GET_URL)
-  public ResponseEntity isRegionActive(@PathVariable(name = "regionCode", required = true) @NotBlank String code) {
-    if (regionService.getRegionByCode(code) != null) {
-      return new ResponseEntity<>(regionService.isRegionActive(code), HttpStatus.OK);
+  public ResponseEntity isRegionActive(@PathVariable(name = "regionBaseId", required = true) @NotBlank String baseId) {
+    if (regionService.isRegionExists(baseId))  {
+      return new ResponseEntity<>(regionService.isRegionActive(baseId), HttpStatus.OK);
     } else {
       return new ResponseEntity<>("Region NOT FOUND", HttpStatus.NOT_FOUND);
     }
@@ -144,8 +136,8 @@ public class RegionController {
    * @return the regions
    */
   @GetMapping(path = Constants.REGION_URL)
-  public ResponseEntity getRegions() {
-    return new ResponseEntity<>(regionService.getRegions(), HttpStatus.OK);
+  public ResponseEntity<List<RegionDto>> getRegions() {
+    return new ResponseEntity<>(RegionDto.toDto(regionService.getRegions()), HttpStatus.OK);
   }
 
   /**

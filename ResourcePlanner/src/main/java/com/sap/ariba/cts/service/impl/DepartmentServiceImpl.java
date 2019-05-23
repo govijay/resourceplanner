@@ -11,6 +11,7 @@ import com.sap.ariba.cts.model.entity.Region;
 import com.sap.ariba.cts.repository.DepartmentRepository;
 import com.sap.ariba.cts.repository.RegionRepository;
 import com.sap.ariba.cts.service.DepartmentService;
+import com.sap.ariba.cts.utils.GenericUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 @Transactional
 public class DepartmentServiceImpl implements DepartmentService {
 
-  private static Logger logger = LoggerFactory.getLogger(RegionServiceImpl.class);
+  private static Logger logger = LoggerFactory.getLogger(DepartmentServiceImpl.class);
 
   @Autowired
   private RegionRepository regionRepo;
@@ -39,94 +40,76 @@ public class DepartmentServiceImpl implements DepartmentService {
   }
 
   @Override
-  public void createDepartment(Department dept) {
-    Region regionFromReq = dept.getRegionBaseId();
-    if (regionFromReq != null) {
-      logger.info(regionFromReq.getRegionCode());
-      Region regionFromDB = regionRepo.getRegionByRegionCode(regionFromReq.getRegionCode());
+  public Department createDepartment(Department dept) {
+
+    String regionId = dept.getRegionBaseId();
+    if (regionId != null) {
+      logger.info(regionId);
+      Region regionFromDB = regionRepo.getRegionByBaseId(regionId);
       if (regionFromDB != null) {
-        logger.info(regionFromReq.getRegionCode());
-        dept.setRegionBaseId(regionFromDB);
+        dept.setRegion(regionFromDB);
       }
     }
     departmentRepo.save(dept);
+    return (Department) departmentRepo.findById(dept.getBaseId()).get();
   }
 
   @Override
-  public void updateDepartment(Department dept) {
+  public Department updateDepartment(Department dept) {
 
-    // dept name change
-    // dept code change
-    // dept's region change
-    Region regionFromReq = dept.getRegionBaseId();
     Region regionFromDb = null;
-    if (regionFromReq != null) {
-      regionFromDb = regionRepo.getRegionByRegionCode(regionFromReq.getRegionCode());
+    String regionId = dept.getRegionBaseId();
+    if (regionId != null) {
+      regionFromDb = regionRepo.getRegionByBaseId(regionId);
     }
-    Department deptToUpdate = departmentRepo.getDepartmentByDepartCodeAndRegionBaseId(dept.getDepartCode(), regionFromDb);
+
+    Department deptToUpdate = departmentRepo.getDepartmentByBaseId(dept.getBaseId());
 
     if (deptToUpdate != null) {
-      deptToUpdate.setDepartCode(dept.getDepartCode());
-      deptToUpdate.setDepartName(dept.getDepartName());
+      GenericUtil.copyNonNullProperties(dept, deptToUpdate);
       if (regionFromDb != null) {
-        deptToUpdate.setRegionBaseId(regionFromDb);
+        deptToUpdate.setRegion(regionFromDb);
       }
     }
     departmentRepo.save(deptToUpdate);
+    return deptToUpdate;
   }
 
   @Override
-  public void deactivateDepartment(String deptCode, String regionCode) {
-    Region regionFromDb = null;
-    if (regionCode != null) {
-      regionFromDb = regionRepo.getRegionByRegionCode(regionCode);
-    }
-    Department deptToDeactivate = departmentRepo.getDepartmentByDepartCodeAndRegionBaseId(deptCode, regionFromDb);
+  public Department deactivateDepartment(String baseId) {
+    Department deptToDeactivate = departmentRepo.getDepartmentByBaseId(baseId);
 
     if (deptToDeactivate != null) {
       deptToDeactivate.setActive(false);
       departmentRepo.save(deptToDeactivate);
     }
-
+    return (Department) departmentRepo.findById(baseId).get();
   }
 
   @Override
-  public void reactivateDepartment(String deptCode, String regionCode) {
-    Region regionFromDb = null;
-    if (regionCode != null) {
-      regionFromDb = regionRepo.getRegionByRegionCode(regionCode);
-    }
-    Department deptToReactivate = departmentRepo.getDepartmentByDepartCodeAndRegionBaseId(deptCode, regionFromDb);
-
-
+  public Department reactivateDepartment(String baseId) {
+   Department deptToReactivate = departmentRepo.getDepartmentByBaseId(baseId);
     if (deptToReactivate != null) {
       deptToReactivate.setActive(true);
       departmentRepo.save(deptToReactivate);
     }
-
+    return (Department) departmentRepo.findById(baseId).get();
   }
 
   @Override
-  public void deleteDepartment(String deptCode, String regionCode) {
-    Region regionFromDb = null;
-    if (regionCode != null) {
-      regionFromDb = regionRepo.getRegionByRegionCode(regionCode);
-    }
-    Department deptToHardDelete = departmentRepo.getDepartmentByDepartCodeAndRegionBaseId(deptCode, regionFromDb);
+  public Boolean deleteDepartment(String baseId) {
+    Department deptToHardDelete = departmentRepo.getDepartmentByBaseId(baseId);
 
     if (deptToHardDelete != null) {
       departmentRepo.delete(deptToHardDelete);
     }
+    return true;
   }
 
 
   @Override
-  public Department getDepartmentByCode(String deptCode, String regionCode) {
-    Region regionFromDb = null;
-    if (regionCode != null) {
-      regionFromDb = regionRepo.getRegionByRegionCode(regionCode);
-    }
-    return departmentRepo.getDepartmentByDepartCodeAndRegionBaseId(deptCode, regionFromDb);
+  public Department getDepartmentByBaseId(String baseId) {
+    return departmentRepo.getDepartmentByBaseId(baseId);
   }
 
 
@@ -136,53 +119,41 @@ public class DepartmentServiceImpl implements DepartmentService {
   }
 
   @Override
-  public List<Department> getDepartmentByRegionCode(String regionCode) {
+  public List<Department> getDepartmentsByRegionBaseId(String regionBaseId) {
     List<Department> departments = new ArrayList<>();
 
-    Region region = regionRepo.getRegionByRegionCode(regionCode);
+    Region region = regionRepo.getRegionByBaseId(regionBaseId);
 
     if (region != null) {
-      departments = (List<Department>) departmentRepo.getDepartmentsByRegionBaseId(region);
+      departments = (List<Department>) departmentRepo.getDepartmentsByRegion(region);
     }
     return departments;
   }
 
   @Override
-  public List<Region> getRegionByDeptCode(String deptCode) {
-    List<Department> departments;
-    List<Region> regions = new ArrayList<>();
-    departments = (List<Department>) departmentRepo.getDepartmentByDepartCode(deptCode);
-    if (!departments.isEmpty()) {
-      for (Department department : departments) {
-        regions.add(department.getRegionBaseId());
-      }
+  public Region getRegionByDeptBaseId(String baseId) {
+
+   Region region = null;
+    Department department = departmentRepo.getDepartmentByBaseId(baseId);
+    if (department != null) {
+      region = department.getRegion();
     }
-    return regions;
+    return region;
   }
 
   @Override
-  public boolean isDepartmentActive(String deptCode, String regionCode) {
-    Region regionFromDB = regionRepo.getRegionByRegionCode(regionCode);
-    Department department = null;
-    if (regionFromDB != null) {
-      department = departmentRepo.getDepartmentByDepartCodeAndRegionBaseId(deptCode, regionFromDB);
-    }
-    if (department != null) {
-      return department.isActive();
-    }
+  public Boolean isDepartmentActive(String baseId) {
+    Department department = departmentRepo.getDepartmentByBaseId(baseId);
+    if (department != null) return department.isActive();
     return false;
   }
 
+
+
   @Override
-  public String getDepartmentNameByCode(String deptCode, String regionCode) {
-    Region regionFromDB = regionRepo.getRegionByRegionCode(regionCode);
-    Department department = null;
-    if (regionFromDB != null) {
-      department = departmentRepo.getDepartmentByDepartCodeAndRegionBaseId(deptCode, regionFromDB);
-    }
-    if (department != null) {
-      return department.getDepartName();
-    }
-    return null;
+  public Boolean isDepartmentExists(String baseId) {
+    Department department = departmentRepo.getDepartmentByBaseId(baseId);
+    if (department != null) return true;
+    return false;
   }
 }

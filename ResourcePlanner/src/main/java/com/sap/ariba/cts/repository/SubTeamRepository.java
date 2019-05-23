@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.sap.ariba.cts.model.entity.SubTeam;
+import com.sap.ariba.cts.model.entity.Team;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -33,27 +34,11 @@ public interface SubTeamRepository<T, String extends Serializable> extends BaseE
   SubTeam getSubTeamByBaseId(String baseId);
 
   /**
-   * Gets sub team by sub team code.
-   *
-   * @param subTeamCode the sub team code
-   * @return the sub team by sub team code
-   */
-  SubTeam getSubTeamBySubTeamCode(String subTeamCode);
-
-  /**
-   * Gets sub team by sub team name.
-   *
-   * @param subTeamName the sub team name
-   * @return the sub team by sub team name
-   */
-  SubTeam getSubTeamBySubTeamName(String subTeamName);
-
-  /**
    * Gets sub teams by team base id.
    *
-   * @param teamBaseId the team base id
+   * @param team the team base id
    * @return the sub teams by team base id
    */
-  Collection<SubTeam> getSubTeamsByTeamBaseId(String teamBaseId);
+  Collection<SubTeam> getSubTeamsByTeam(Team team);
 
 }

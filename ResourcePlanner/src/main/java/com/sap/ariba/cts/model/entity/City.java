@@ -9,14 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.dto.CityDto;
+import com.sap.ariba.cts.model.support.ClassMetaProperty;
+import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
 /**
  * City Model.
@@ -28,40 +32,70 @@ import com.sap.ariba.cts.model.base.BaseEntity;
  */
 @Entity
 @Table(name = "CITIES")
+@ClassMetaProperty(code = "CTY")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class City extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "citySequenceGenerator")
   @GenericGenerator(name = "citySequenceGenerator",
-          strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+          strategy = "com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator",
           parameters = {
-                  @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "city_seq"),
-                  @Parameter(name = SequenceStyleGenerator.CONFIG_SEQUENCE_PER_ENTITY_SUFFIX, value = "_CTY"),
-                  @Parameter(name = SequenceStyleGenerator.CONFIG_PREFER_SEQUENCE_PER_ENTITY, value = "true"),
-                  @Parameter(name = SequenceStyleGenerator.INITIAL_PARAM, value = "1000"),
-                  @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1")
+                  @Parameter(name = EntitySequenceNumberGenerator.SEQUENCE_PARAM, value = "city_seq"),
+                  @Parameter(name = EntitySequenceNumberGenerator.INITIAL_PARAM, value = "1000"),
+                  @Parameter(name = EntitySequenceNumberGenerator.INCREMENT_PARAM, value = "1")
           })
   @Column(name = "BASE_ID")
   private String baseId;
 
 
   @Column(name = "CITY_CODE",unique = true)
-  @NotBlank
   private String cityCode;
 
   @Column(name = "CITY_NAME")
-  @NotBlank
   private String cityName;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "COUNTRY_BASEID")
   @JsonBackReference
-  private Country countryBaseId;
+  private Country country;
+
+  @Transient
+  private String countryBaseId;
 
   /**
    * Instantiates a new City.
    */
   protected City() {
+  }
+
+  /**
+   * Instantiates a new Base entity.
+   *
+   * @param active the active
+   */
+  public City(boolean active, String baseId, @NotBlank String cityCode, @NotBlank String cityName, String countryBaseId) {
+    super(active);
+    this.baseId = baseId;
+    this.cityCode = cityCode;
+    this.cityName = cityName;
+    this.countryBaseId = countryBaseId;
+  }
+
+  public String getBaseId() {
+    return baseId;
+  }
+
+  public void setBaseId(String baseId) {
+    this.baseId = baseId;
+  }
+
+  public Country getCountry() {
+    return country;
+  }
+
+  public void setCountry(Country country) {
+    this.country = country;
   }
 
   /**
@@ -100,24 +134,23 @@ public class City extends BaseEntity {
     this.cityName = cityName;
   }
 
-  /**
-   * Gets country.
-   *
-   * @return the country
-   */
-  public Country getCountry() {
-    return countryBaseId;
-  }
-
-  /**
-   * Sets country.
-   *
-   * @param countryBaseId the country
-   */
-  public void setCountry(Country countryBaseId) {
+  public void setCountryBaseId(String countryBaseId) {
     this.countryBaseId = countryBaseId;
   }
 
+  public String getCountryBaseId() {
+    return countryBaseId;
+  }
+
+  public static City toEntity(CityDto cityDto) {
+    return new City(
+            cityDto.isActive(),
+            cityDto.getBaseId(),
+            cityDto.getCtyCode(),
+            cityDto.getCtyName(),
+            cityDto.getCountryId());
+
+  }
 
   @Override
   public String toString() {

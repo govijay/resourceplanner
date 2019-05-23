@@ -9,14 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.dto.SubTeamDto;
+import com.sap.ariba.cts.model.support.ClassMetaProperty;
+import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
 /**
  * Sub Team Model.
@@ -28,40 +32,54 @@ import com.sap.ariba.cts.model.base.BaseEntity;
  */
 @Entity
 @Table(name = "SUB_TEAMS")
+@ClassMetaProperty(code = "ST")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SubTeam extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subteamSequenceGenerator")
   @GenericGenerator(name = "subteamSequenceGenerator",
-          strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+          strategy = "com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator",
           parameters = {
-                  @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "sub_team_seq"),
-                  @Parameter(name = SequenceStyleGenerator.CONFIG_SEQUENCE_PER_ENTITY_SUFFIX, value = "_STM"),
-                  @Parameter(name = SequenceStyleGenerator.CONFIG_PREFER_SEQUENCE_PER_ENTITY, value = "true"),
-                  @Parameter(name = SequenceStyleGenerator.INITIAL_PARAM, value = "1000"),
-                  @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1")
+                  @Parameter(name = EntitySequenceNumberGenerator.SEQUENCE_PARAM, value = "subteam_seq"),
+                  @Parameter(name = EntitySequenceNumberGenerator.INITIAL_PARAM, value = "1000"),
+                  @Parameter(name = EntitySequenceNumberGenerator.INCREMENT_PARAM, value = "1")
           })
   @Column(name = "BASE_ID")
   private String baseId;
 
   @Column(name = "SUB_TEAM_CODE")
-  @NotBlank
   private String subTeamCode;
 
   @Column(name = "SUB_TEAM_NAME")
-  @NotBlank
   private String subTeamName;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "TEAM_BASEID")
   @JsonBackReference
-  private Team teamBaseId;
+  private Team team;
+
+  @Transient
+  private String teamBaseId;
 
 
   /**
    * Instantiates a new Sub team.
    */
   protected SubTeam() {
+  }
+
+  /**
+   * Instantiates a new Base entity.
+   *
+   * @param active the active
+   */
+  public SubTeam(String baseId, boolean active, @NotBlank String subTeamCode, @NotBlank String subTeamName, String teamBaseId) {
+    super(active);
+    this.baseId = baseId;
+    this.subTeamCode = subTeamCode;
+    this.subTeamName = subTeamName;
+    this.teamBaseId = teamBaseId;
   }
 
   /**
@@ -87,17 +105,17 @@ public class SubTeam extends BaseEntity {
    *
    * @return the team base id
    */
-  public Team getTeamBaseId() {
-    return teamBaseId;
+  public Team getTeam() {
+    return team;
   }
 
   /**
    * Sets team base id.
    *
-   * @param teamBaseId the team base id
+   * @param team the team base id
    */
-  public void setTeamBaseId(Team teamBaseId) {
-    this.teamBaseId = teamBaseId;
+  public void setTeam(Team team) {
+    this.team = team;
   }
 
   /**
@@ -135,6 +153,26 @@ public class SubTeam extends BaseEntity {
   public void setSubTeamName(String subTeamName) {
     this.subTeamName = subTeamName;
   }
+
+  public String getTeamBaseId() {
+    return teamBaseId;
+  }
+
+  public void setTeamBaseId(String teamBaseId) {
+    this.teamBaseId = teamBaseId;
+  }
+
+  public static SubTeam toEntity(SubTeamDto subTeamDto) {
+    SubTeam subTeam = new SubTeam(
+            subTeamDto.getBaseId(),
+            subTeamDto.isActive(),
+            subTeamDto.getSubTeamCode(),
+            subTeamDto.getSubTeamName(),
+            subTeamDto.getTeamBaseId()
+    );
+    return subTeam;
+  }
+
 
   @Override
   public String toString() {

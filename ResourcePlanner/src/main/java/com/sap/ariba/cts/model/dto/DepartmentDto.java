@@ -1,7 +1,5 @@
 package com.sap.ariba.cts.model.dto;
 
-import javax.validation.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.ariba.cts.model.base.BaseDto;
@@ -13,7 +11,6 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DepartmentDto extends BaseDto {
 
-  @NotEmpty
   @JsonProperty("code")
   String deptCode;
 
@@ -25,9 +22,6 @@ public class DepartmentDto extends BaseDto {
 
   @JsonProperty("regionid")
   String regionId;
-
-  @JsonProperty("teams")
-  List<TeamDto> teamDtoList;
 
   public DepartmentDto() {
   }
@@ -70,14 +64,6 @@ public class DepartmentDto extends BaseDto {
     this.regionId = regionId;
   }
 
-  public List<TeamDto> getTeamDtoList() {
-    return teamDtoList;
-  }
-
-  public void setTeamDtoList(List<TeamDto> teamDtoList) {
-    this.teamDtoList = teamDtoList;
-  }
-
   public static DepartmentDto toDto(Department department) {
 
     DepartmentDto departmentDto = new DepartmentDto(department.getBaseId(),
@@ -85,8 +71,11 @@ public class DepartmentDto extends BaseDto {
               department.getDepartCode(),
               department.getDepartName());
     if(department.getRegion() != null){
-      departmentDto.setRegionDto(RegionDto.toDto(department.getRegion()));
+      RegionDto regionDto = RegionDto.toDto(department.getRegion());
+      departmentDto.setRegionDto(regionDto);
+      departmentDto.setRegionId(regionDto.getBaseId());
     }
+
     return departmentDto;
   }
 

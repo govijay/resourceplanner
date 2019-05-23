@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +34,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(path = Constants.MASTER_DATA_URL,
-        consumes = "application/json",
-        produces = "application/json")
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class DepartmentController {
 
   private static Logger logger = LoggerFactory.getLogger(DepartmentController.class);
@@ -124,7 +125,7 @@ public class DepartmentController {
 
 
   @GetMapping(path = Constants.DEPARTMENT_REGION_GET_URL)
-  public ResponseEntity<RegionDto> getRegionByDepartmentBaseID(@PathVariable(name = "deptBaseId", required = true) @NotBlank String deptBaseId) {
+  public ResponseEntity<RegionDto> getRegionByDepartmentBaseId(@PathVariable(name = "deptBaseId", required = true) @NotBlank String deptBaseId) {
     if (departmentService.isDepartmentExists(deptBaseId)) {
       Region region = departmentService.getRegionByDeptBaseId(deptBaseId);
       return new ResponseEntity<>(RegionDto.toDto(region), HttpStatus.OK);

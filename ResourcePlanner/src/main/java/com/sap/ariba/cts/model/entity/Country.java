@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.dto.CountryDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
 import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
@@ -52,19 +54,20 @@ public class Country extends BaseEntity {
   private String baseId;
 
   @Column(name = "COUNTRY_CODE",unique = true)
-  @NotBlank
   private String countryCode;
 
   @Column(name = "COUNTRY_NAME")
-  @NotBlank
   private String countryName;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "REGION_BASEID")
   @JsonBackReference
-  private Region regionBaseId;
+  private Region region;
 
-  @OneToMany(mappedBy = "countryBaseId", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @Transient
+  private String regionBaseId;
+
+  @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JsonManagedReference
   private Collection<City> cities;
 
@@ -72,6 +75,19 @@ public class Country extends BaseEntity {
    * Instantiates a new Country.
    */
   protected Country() {
+  }
+
+  /**
+   * Instantiates a new Base entity.
+   *
+   * @param active the active
+   */
+  public Country(boolean active, String baseId, @NotBlank String countryCode, @NotBlank String countryName, String regionBaseId) {
+    super(active);
+    this.baseId = baseId;
+    this.countryCode = countryCode;
+    this.countryName = countryName;
+    this.regionBaseId = regionBaseId;
   }
 
   /**
@@ -110,23 +126,6 @@ public class Country extends BaseEntity {
     this.countryName = countryName;
   }
 
-  /**
-   * Gets region code.
-   *
-   * @return the region code
-   */
-  public Region getRegionCode() {
-    return regionBaseId;
-  }
-
-  /**
-   * Sets region code.
-   *
-   * @param regionBaseId the region code
-   */
-  public void setRegionCode(Region regionBaseId) {
-    this.regionBaseId = regionBaseId;
-  }
 
   /**
    * Gets base id.
@@ -162,6 +161,32 @@ public class Country extends BaseEntity {
    */
   public void setCities(Collection<City> cities) {
     this.cities = cities;
+  }
+
+  public Region getRegion() {
+    return region;
+  }
+
+  public void setRegion(Region region) {
+    this.region = region;
+  }
+
+  public String getRegionBaseId() {
+    return regionBaseId;
+  }
+
+  public void setRegionBaseId(String regionBaseId) {
+    this.regionBaseId = regionBaseId;
+  }
+
+  public static Country toEntity(CountryDto countryDto) {
+    return new Country(
+            countryDto.isActive(),
+            countryDto.getBaseId(),
+            countryDto.getCtryCode(),
+            countryDto.getCtryName(),
+            countryDto.getRegionBaseId());
+
   }
 
   @Override

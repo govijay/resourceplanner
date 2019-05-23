@@ -11,6 +11,7 @@ import com.sap.ariba.cts.model.entity.Team;
 import com.sap.ariba.cts.repository.DepartmentRepository;
 import com.sap.ariba.cts.repository.TeamRepository;
 import com.sap.ariba.cts.service.TeamService;
+import com.sap.ariba.cts.utils.GenericUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 @Transactional
 public class TeamServiceImpl implements TeamService {
 
-  private static Logger logger = LoggerFactory.getLogger(RegionServiceImpl.class);
+  private static Logger logger = LoggerFactory.getLogger(TeamServiceImpl.class);
 
   @Autowired
   private TeamRepository teamRepo;
@@ -59,9 +60,7 @@ public class TeamServiceImpl implements TeamService {
     Team teamToUpdate = teamRepo.getTeamByBaseId(team.getBaseId());
 
     if(teamToUpdate != null){
-      teamToUpdate.setActive(team.isActive());
-      teamToUpdate.setTeamCode(team.getTeamCode());
-      teamToUpdate.setTeamName(team.getTeamName());
+      GenericUtil.copyNonNullProperties(team, teamToUpdate);
       if(deptFromDb != null) teamToUpdate.setDepartment(deptFromDb);
       teamRepo.save(teamToUpdate);
     }

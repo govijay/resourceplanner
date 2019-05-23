@@ -11,6 +11,7 @@ import com.sap.ariba.cts.model.entity.Region;
 import com.sap.ariba.cts.repository.DepartmentRepository;
 import com.sap.ariba.cts.repository.RegionRepository;
 import com.sap.ariba.cts.service.DepartmentService;
+import com.sap.ariba.cts.utils.GenericUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 @Transactional
 public class DepartmentServiceImpl implements DepartmentService {
 
-  private static Logger logger = LoggerFactory.getLogger(RegionServiceImpl.class);
+  private static Logger logger = LoggerFactory.getLogger(DepartmentServiceImpl.class);
 
   @Autowired
   private RegionRepository regionRepo;
@@ -65,9 +66,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     Department deptToUpdate = departmentRepo.getDepartmentByBaseId(dept.getBaseId());
 
     if (deptToUpdate != null) {
-      deptToUpdate.setActive(dept.isActive());
-      deptToUpdate.setDepartCode(dept.getDepartCode());
-      deptToUpdate.setDepartName(dept.getDepartName());
+      GenericUtil.copyNonNullProperties(dept, deptToUpdate);
       if (regionFromDb != null) {
         deptToUpdate.setRegion(regionFromDb);
       }
@@ -78,7 +77,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
   @Override
   public Department deactivateDepartment(String baseId) {
-
     Department deptToDeactivate = departmentRepo.getDepartmentByBaseId(baseId);
 
     if (deptToDeactivate != null) {

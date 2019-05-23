@@ -1,28 +1,36 @@
 package com.sap.ariba.cts.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.ariba.cts.model.base.BaseDto;
-import com.sap.ariba.cts.model.entity.City;
 import com.sap.ariba.cts.model.entity.Country;
+import com.sap.ariba.cts.model.entity.Region;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CountryDto extends BaseDto {
 
+  @JsonProperty("code")
   String ctryCode;
+
+  @JsonProperty("name")
   String ctryName;
-  List<CityDto> cityDtoList;
+
+  @JsonProperty("region")
   RegionDto regionDto;
+
+  @JsonProperty("regionid")
+  String regionBaseId;
 
   public CountryDto() {
   }
 
-  public CountryDto(String baseId, boolean isActive, String ctryCode, String ctryName, List<CityDto> cityDtoList, RegionDto regionDto) {
+  public CountryDto(String baseId, boolean isActive, String ctryCode, String ctryName) {
     super(baseId, isActive);
     this.ctryCode = ctryCode;
     this.ctryName = ctryName;
-    this.cityDtoList = cityDtoList;
-    this.regionDto = regionDto;
   }
 
   public String getCtryCode() {
@@ -41,22 +49,37 @@ public class CountryDto extends BaseDto {
     this.ctryName = ctryName;
   }
 
-  public List<CityDto> getCityDtoList() {
-    return cityDtoList;
+  public RegionDto getRegionDto() {
+    return regionDto;
   }
 
-  public void setCityDtoList(List<CityDto> cityDtoList) {
-    this.cityDtoList = cityDtoList;
+  public void setRegionDto(RegionDto regionDto) {
+    this.regionDto = regionDto;
+  }
+
+  public String getRegionBaseId() {
+    return regionBaseId;
+  }
+
+  public void setRegionBaseId(String regionBaseId) {
+    this.regionBaseId = regionBaseId;
   }
 
   public static CountryDto toDto(Country country) {
-    return new CountryDto(country.getBaseId(),
+
+    CountryDto countryDto = new CountryDto(country.getBaseId(),
             country.isActive(),
             country.getCountryCode(),
-            country.getCountryName(),
-            CityDto.toDto((List<City>) country.getCities()),
-            RegionDto.toDto(country.getRegionCode())
-      );
+            country.getCountryName());
+
+    Region region = country.getRegion();
+
+    if (region != null) {
+      RegionDto regionDto = RegionDto.toDto(region);
+      countryDto.setRegionDto(regionDto);
+      countryDto.setRegionBaseId(region.getBaseId());
+    }
+    return countryDto;
   }
 
   public static List<CountryDto> toDto(List<Country> countries) {

@@ -23,7 +23,6 @@ import com.sap.ariba.cts.model.support.ClassMetaProperty;
 import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -56,18 +55,16 @@ public class Region extends BaseEntity implements Serializable {
   private String baseId;
 
   @Column(name = "REGION_CODE")
-  @NotBlank
   private String regionCode;
 
   @Column(name = "REGION_NAME")
-  @NotBlank
   private String regionName;
 
   @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, orphanRemoval = false)
   @JsonManagedReference
   private Collection<Department> departments;
 
-  @OneToMany(mappedBy = "regionBaseId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JsonManagedReference
   private Collection<Country> countries;
 
@@ -200,13 +197,6 @@ public class Region extends BaseEntity implements Serializable {
             regionDto.isActive(),
             regionDto.getRegionCode(),
             regionDto.getRegionName());
-
-    if(regionDto.getDepartmentDtoList()!= null){
-      region.setDepartments(new ArrayList(regionDto.getDepartmentDtoList()));
-    }
-    if(regionDto.getCountryDtoList() != null){
-      region.setCountries(new ArrayList(regionDto.getCountryDtoList()));
-    }
     return region;
   }
 }

@@ -54,11 +54,9 @@ public class Team extends BaseEntity {
   private String baseId;
 
   @Column(name = "TEAM_CODE",unique = true)
-  @NotBlank
   private String teamCode;
 
   @Column(name = "TEAM_NAME")
-  @NotBlank
   private String teamName;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -69,7 +67,7 @@ public class Team extends BaseEntity {
   @Transient
   private String departmentBaseId;
 
-  @OneToMany(mappedBy = "teamBaseId", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToMany(mappedBy = "team", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JsonManagedReference
   private Collection<SubTeam> subTeams;
 
@@ -209,7 +207,6 @@ public class Team extends BaseEntity {
               teamDto.getTeamName(),
               teamDto.getDepartmentBaseId()
       );
-
       return team;
   }
 

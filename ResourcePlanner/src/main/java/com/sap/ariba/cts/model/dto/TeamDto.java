@@ -1,7 +1,5 @@
 package com.sap.ariba.cts.model.dto;
 
-import javax.validation.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.ariba.cts.model.base.BaseDto;
@@ -13,7 +11,6 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TeamDto extends BaseDto {
 
-  @NotEmpty
   @JsonProperty("code")
   String teamCode;
 
@@ -26,8 +23,6 @@ public class TeamDto extends BaseDto {
   @JsonProperty("departmentid")
   String departmentBaseId;
 
-  @JsonProperty("subteams")
-  List<SubTeamDto> subTeamDto;
 
    public TeamDto(String baseId, boolean isActive, String teamCode, String teamName ,String departmentBaseId ) {
     super(baseId, isActive);
@@ -60,20 +55,27 @@ public class TeamDto extends BaseDto {
     this.departmentBaseId = departmentBaseId;
   }
 
-  public List<SubTeamDto> getSubTeamDto() {
-    return subTeamDto;
+  public DepartmentDto getDepartmentDto() {
+    return departmentDto;
   }
 
-  public void setSubTeamDto(List<SubTeamDto> subTeamDto) {
-    this.subTeamDto = subTeamDto;
+  public void setDepartmentDto(DepartmentDto departmentDto) {
+    this.departmentDto = departmentDto;
   }
 
   public static TeamDto toDto(Team team) {
-    return new TeamDto(team.getBaseId(),
+    TeamDto teamDto = new TeamDto(team.getBaseId(),
             team.isActive(),
             team.getTeamCode(),
             team.getTeamName(),
             team.getDepartmentBaseId());
+    if (team.getDepartment() != null) {
+      DepartmentDto departmentDto = DepartmentDto.toDto(team.getDepartment());
+      teamDto.setDepartmentDto(departmentDto);
+      teamDto.setDepartmentBaseId(departmentDto.getBaseId());
+    }
+    return teamDto;
+
   }
 
   public static List<TeamDto> toDto(List<Team> teams) {

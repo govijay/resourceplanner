@@ -55,11 +55,9 @@ public class Department extends BaseEntity {
   private String baseId;
 
   @Column(name = "DEPART_CODE")
-  @NotBlank
   private String departCode;
 
   @Column(name = "DEPART_NAME")
-  @NotBlank
   private String departName;
 
   @ManyToOne(fetch = FetchType.LAZY)

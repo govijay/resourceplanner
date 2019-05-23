@@ -10,6 +10,7 @@ import com.sap.ariba.cts.model.entity.Department;
 import com.sap.ariba.cts.model.entity.Region;
 import com.sap.ariba.cts.repository.RegionRepository;
 import com.sap.ariba.cts.service.RegionService;
+import com.sap.ariba.cts.utils.GenericUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,9 +47,7 @@ public class RegionServiceImpl implements RegionService {
     Region regionToUpdate = regionRepo.getRegionByBaseId(region.getBaseId());
 
     if (regionToUpdate != null) {
-      regionToUpdate.setRegionCode(region.getRegionCode());
-      regionToUpdate.setRegionName(region.getRegionName());
-      regionToUpdate.setActive(region.isActive());
+      GenericUtil.copyNonNullProperties(region, regionToUpdate);
       regionRepo.save(regionToUpdate);
     }
     return (Region) regionRepo.findById(regionToUpdate.getBaseId()).get();

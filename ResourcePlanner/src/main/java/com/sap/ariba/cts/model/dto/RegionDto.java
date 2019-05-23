@@ -1,7 +1,5 @@
 package com.sap.ariba.cts.model.dto;
 
-import javax.validation.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.ariba.cts.model.base.BaseDto;
@@ -13,18 +11,12 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RegionDto extends BaseDto {
 
-  @NotEmpty
   @JsonProperty("code")
   String regionCode;
 
   @JsonProperty("name")
   String regionName;
 
-  @JsonProperty("departments")
-  List<DepartmentDto> departmentDtoList;
-
-  @JsonProperty("countries")
-  List<CountryDto> countryDtoList;
 
   public RegionDto() {
   }
@@ -49,22 +41,6 @@ public class RegionDto extends BaseDto {
 
   public void setRegionName(String regionName) {
     this.regionName = regionName;
-  }
-
-  public List<DepartmentDto> getDepartmentDtoList() {
-    return departmentDtoList;
-  }
-
-  public void setDepartmentDtoList(List<DepartmentDto> departmentDtoList) {
-    this.departmentDtoList = departmentDtoList;
-  }
-
-  public List<CountryDto> getCountryDtoList() {
-    return countryDtoList;
-  }
-
-  public void setCountryDtoList(List<CountryDto> countryDtoList) {
-    this.countryDtoList = countryDtoList;
   }
 
   public static RegionDto toDto(Region region) {

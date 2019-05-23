@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -17,6 +18,7 @@ import org.hibernate.annotations.Parameter;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.dto.CityDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
 import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
@@ -48,22 +50,36 @@ public class City extends BaseEntity {
 
 
   @Column(name = "CITY_CODE",unique = true)
-  @NotBlank
   private String cityCode;
 
   @Column(name = "CITY_NAME")
-  @NotBlank
   private String cityName;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "COUNTRY_BASEID")
   @JsonBackReference
-  private Country countryBaseId;
+  private Country country;
+
+  @Transient
+  private String countryBaseId;
 
   /**
    * Instantiates a new City.
    */
   protected City() {
+  }
+
+  /**
+   * Instantiates a new Base entity.
+   *
+   * @param active the active
+   */
+  public City(boolean active, String baseId, @NotBlank String cityCode, @NotBlank String cityName, String countryBaseId) {
+    super(active);
+    this.baseId = baseId;
+    this.cityCode = cityCode;
+    this.cityName = cityName;
+    this.countryBaseId = countryBaseId;
   }
 
   public String getBaseId() {
@@ -74,12 +90,12 @@ public class City extends BaseEntity {
     this.baseId = baseId;
   }
 
-  public Country getCountryBaseId() {
-    return countryBaseId;
+  public Country getCountry() {
+    return country;
   }
 
-  public void setCountryBaseId(Country countryBaseId) {
-    this.countryBaseId = countryBaseId;
+  public void setCountry(Country country) {
+    this.country = country;
   }
 
   /**
@@ -116,6 +132,24 @@ public class City extends BaseEntity {
    */
   public void setCityName(String cityName) {
     this.cityName = cityName;
+  }
+
+  public void setCountryBaseId(String countryBaseId) {
+    this.countryBaseId = countryBaseId;
+  }
+
+  public String getCountryBaseId() {
+    return countryBaseId;
+  }
+
+  public static City toEntity(CityDto cityDto) {
+    return new City(
+            cityDto.isActive(),
+            cityDto.getBaseId(),
+            cityDto.getCtyCode(),
+            cityDto.getCtyName(),
+            cityDto.getCountryId());
+
   }
 
   @Override

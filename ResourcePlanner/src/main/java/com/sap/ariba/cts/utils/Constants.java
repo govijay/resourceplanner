@@ -2,6 +2,8 @@ package com.sap.ariba.cts.utils;
 
 public final class Constants {
 
+    private Constants() {}
+    
   // api url is /masterdata
   public static final String MASTER_DATA_URL = "/masterdata";
 
@@ -105,5 +107,6 @@ public final class Constants {
   // CITY API URL
   // update/ get all cities
   public static final String CITY_URL = "/cities";
+  public static final String USERINFO = "/users";
 
 }

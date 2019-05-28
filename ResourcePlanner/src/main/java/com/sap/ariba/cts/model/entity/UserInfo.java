@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -41,10 +42,10 @@ public class UserInfo {
   @Column(name = "EMAIL")
   private String email;
 
-  @Column(name = "COUNTRY_CODE")
+  @OneToOne
   private Country country;
 
-  @Column(name = "CITY_CODE")
+  @OneToOne
   private City city;
 
   @Column(name = "CREATED_DATE")
@@ -59,6 +60,18 @@ public class UserInfo {
 
   @Column(name = "ACTIVE")
   private boolean active;
+
+  public UserInfo() {
+  }
+
+  public UserInfo(String userId, String firstName, String lastName, String middleName, String email, boolean active) {
+    this.userId = userId;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.middleName = middleName;
+    this.email = email;
+    this.active = active;
+  }
 
   public Integer getVersion() {
     return version;

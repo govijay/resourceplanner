@@ -2,6 +2,10 @@ package com.sap.ariba.cts.utils;
 
 public final class Constants {
 
+
+  private Constants() {
+  }
+
   // api url is /masterdata
   public static final String MASTER_DATA_URL = "/masterdata";
 
@@ -105,5 +109,40 @@ public final class Constants {
   // CITY API URL
   // update/ get all cities
   public static final String CITY_URL = "/cities";
+
+  // delete / get by baseId
+  // api url is /masterdata/cities/{cityBaseId}
+  public static final String CITY_CODE_URL = CITY_URL + "/{cityBaseId}";
+  // deactivate or reactivate city
+  // api url is /masterdata/cities/{cityBaseId}/status/{flag}
+  public static final String CITY_STATUS_SET_URL = CITY_CODE_URL + "/status" + "/{flag}";
+  // get city status(active or not)
+  // api url is /masterdata/cities/{cityBaseId}/status
+  public static final String CITY_STATUS_GET_URL = CITY_CODE_URL + "/status";
+  // api url is /masterdata/cities/count
+  public static final String CITY_COUNT_URL = CITY_URL + "/count";
+  //get country of city
+  // api url is /masterdata/cities/country/{cityBaseId}
+  public static final String CITY_CTRY_GET_URL = "/country" + "/{cityBaseId}";
+  // get cities of a country
+  // api url is /masterdata/cities/countries/{ctryBaseId}
+  public static final String CITYS_CTRY_GET_URL = CITY_URL + CTRY_CODE_URL;
+
+
+  // USER DETAILS API URL
+  // update/ get all cities
+  public static final String USR_DETAILS_URL = "/userdetails";
+  // delete / get by baseId
+  // api url is /masterdata/cities/{cityBaseId}
+  public static final String USR_DETAILS_CODE_URL =  "/{usrdBaseId}";
+
+  // api url is /masterdata/cities/{cityBaseId}
+  public static final String USR_DETAILS_BY_USR_CODE_URL = "/user" + "/{userBaseId}";
+
+  // api url is /masterdata/cities/count
+  public static final String USR_DETAILS_COUNT_URL = USR_DETAILS_URL + "/count";
+
+
+  public static final String USERINFO = "/users";
 
 }

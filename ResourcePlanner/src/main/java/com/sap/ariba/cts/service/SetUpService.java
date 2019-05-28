@@ -7,5 +7,7 @@ public interface SetUpService {
   void setUpCountries();
 
   void setUpCities();
+
+  void setUpAdminUser();
 }
 

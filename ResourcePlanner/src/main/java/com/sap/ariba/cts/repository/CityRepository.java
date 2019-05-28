@@ -27,6 +27,8 @@ public interface CityRepository<T, String extends Serializable> extends BaseEnti
 
   City getCityByBaseId(String baseId);
 
+  City getCityByCityCode(String cityCode);
+
   Collection<City> getCitiesByCountry(Country country);
 
 

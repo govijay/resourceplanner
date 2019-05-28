@@ -1,9 +1,7 @@
 package com.sap.ariba.cts.model.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -59,7 +56,7 @@ public class Team extends BaseEntity {
   @Column(name = "TEAM_NAME")
   private String teamName;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "DEPART_BASEID")
   @JsonBackReference
   private Department department;
@@ -67,7 +64,7 @@ public class Team extends BaseEntity {
   @Transient
   private String departmentBaseId;
 
-  @OneToMany(mappedBy = "team", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToMany(mappedBy = "team")
   @JsonManagedReference
   private Collection<SubTeam> subTeams;
 
@@ -82,7 +79,7 @@ public class Team extends BaseEntity {
    *
    * @param active the active
    */
-  public Team(String baseId ,boolean active, @NotBlank String teamCode, @NotBlank String teamName,String departmentBaseId) {
+  public Team(String baseId, boolean active, String teamCode, String teamName, String departmentBaseId) {
     super(active);
     this.baseId = baseId;
     this.teamCode = teamCode;

@@ -56,7 +56,7 @@ public interface RegionService {
   Boolean deleteRegion(String regionCode);
 
 
-  boolean isRegionActive(String baseId);
+  Boolean isRegionActive(String baseId);
 
   /**
    * Is region exists boolean.
@@ -64,7 +64,7 @@ public interface RegionService {
    * @param baseId the region code
    * @return the boolean
    */
-  boolean isRegionExists(String baseId);
+  Boolean isRegionExists(String baseId);
 
 
   Region getRegionByBaseId(String baseId);

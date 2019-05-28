@@ -101,7 +101,7 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public boolean isRegionActive(String baseId) {
+  public Boolean isRegionActive(String baseId) {
     Optional<Region> regionOpt =  regionRepo.findById(baseId);
     if (regionOpt.isPresent()){
       return regionOpt.get().isActive();
@@ -110,7 +110,7 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public boolean isRegionExists(String baseId) {
+  public Boolean isRegionExists(String baseId) {
     Optional<Region> regionOpt =  regionRepo.findById(baseId);
     if (regionOpt.isPresent()) return true;
     return false;

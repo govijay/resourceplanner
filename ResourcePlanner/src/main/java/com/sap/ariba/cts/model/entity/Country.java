@@ -1,9 +1,8 @@
 package com.sap.ariba.cts.model.entity;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,13 +11,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sap.ariba.cts.model.base.BaseEntity;
 import com.sap.ariba.cts.model.dto.CountryDto;
@@ -38,7 +36,8 @@ import java.util.Collection;
 @Entity
 @Table(name = "COUNTRIES")
 @ClassMetaProperty(code = "CTRY")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Country extends BaseEntity {
 
   @Id
@@ -53,13 +52,13 @@ public class Country extends BaseEntity {
   @Column(name = "BASE_ID")
   private String baseId;
 
-  @Column(name = "COUNTRY_CODE",unique = true)
+  @Column(name = "COUNTRY_CODE")
   private String countryCode;
 
   @Column(name = "COUNTRY_NAME")
   private String countryName;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "REGION_BASEID")
   @JsonBackReference
   private Region region;
@@ -67,7 +66,7 @@ public class Country extends BaseEntity {
   @Transient
   private String regionBaseId;
 
-  @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToMany(mappedBy = "country")
   @JsonManagedReference
   private Collection<City> cities;
 
@@ -82,7 +81,7 @@ public class Country extends BaseEntity {
    *
    * @param active the active
    */
-  public Country(boolean active, String baseId, @NotBlank String countryCode, @NotBlank String countryName, String regionBaseId) {
+  public Country(boolean active, String baseId, String countryCode, String countryName, String regionBaseId) {
     super(active);
     this.baseId = baseId;
     this.countryCode = countryCode;

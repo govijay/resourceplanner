@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sap.ariba.cts.model.entity.Department;
+import com.sap.ariba.cts.model.entity.SubTeam;
 import com.sap.ariba.cts.model.entity.Team;
 import com.sap.ariba.cts.repository.DepartmentRepository;
 import com.sap.ariba.cts.repository.TeamRepository;
@@ -14,6 +15,7 @@ import com.sap.ariba.cts.service.TeamService;
 import com.sap.ariba.cts.utils.GenericUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -95,13 +97,22 @@ public class TeamServiceImpl implements TeamService {
 
   @Override
   public Boolean deleteTeam(String baseId) {
-    Team teamToDelete = null;
+    Team teamToHardDelete = null;
     if(baseId != null){
-      teamToDelete = teamRepo.getTeamByBaseId(baseId);
+      teamToHardDelete = teamRepo.getTeamByBaseId(baseId);
     }
-    if(teamToDelete != null){
-      teamRepo.delete(teamToDelete);
+    if (teamToHardDelete != null) {
+      teamRepo.delete(teamToHardDelete);
     }
+    if (teamToHardDelete != null) {
+      Collection<SubTeam> subTeams = (Collection<SubTeam>) teamToHardDelete.getSubTeams();
+      if (!subTeams.isEmpty()) {
+        for (SubTeam subTeam : subTeams) {
+          subTeam.setTeam(null);
+        }
+      }
+    }
+
     return true;
   }
 

@@ -1,8 +1,8 @@
 package com.sap.ariba.cts.model.entity;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,13 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sap.ariba.cts.model.base.BaseEntity;
 import com.sap.ariba.cts.model.dto.CityDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
@@ -33,7 +32,8 @@ import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 @Entity
 @Table(name = "CITIES")
 @ClassMetaProperty(code = "CTY")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class City extends BaseEntity {
 
   @Id
@@ -49,13 +49,13 @@ public class City extends BaseEntity {
   private String baseId;
 
 
-  @Column(name = "CITY_CODE",unique = true)
+  @Column(name = "CITY_CODE")
   private String cityCode;
 
   @Column(name = "CITY_NAME")
   private String cityName;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "COUNTRY_BASEID")
   @JsonBackReference
   private Country country;
@@ -74,7 +74,7 @@ public class City extends BaseEntity {
    *
    * @param active the active
    */
-  public City(boolean active, String baseId, @NotBlank String cityCode, @NotBlank String cityName, String countryBaseId) {
+  public City(boolean active, String baseId, String cityCode, String cityName, String countryBaseId) {
     super(active);
     this.baseId = baseId;
     this.cityCode = cityCode;

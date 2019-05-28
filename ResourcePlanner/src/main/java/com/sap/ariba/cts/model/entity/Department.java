@@ -1,6 +1,5 @@
 package com.sap.ariba.cts.model.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -68,7 +66,7 @@ public class Department extends BaseEntity {
   @Transient
   private String regionBaseId;
 
-  @OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "department")
   @JsonManagedReference
   private Collection<Team> teams;
 
@@ -83,7 +81,7 @@ public class Department extends BaseEntity {
    *
    * @param active the active
    */
-  public Department(boolean active,String baseId, @NotBlank String departCode, @NotBlank String departName,String regionBaseId) {
+  public Department(boolean active, String baseId, String departCode, String departName, String regionBaseId) {
     super(active);
     this.baseId = baseId;
     this.departCode = departCode;

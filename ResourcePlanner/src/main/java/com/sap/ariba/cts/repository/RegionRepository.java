@@ -25,4 +25,6 @@ public interface RegionRepository<T, String extends Serializable> extends BaseEn
 
   Region getRegionByBaseId(String baseId);
 
+  Region getRegionByRegionCode(String regionCode);
+
 }

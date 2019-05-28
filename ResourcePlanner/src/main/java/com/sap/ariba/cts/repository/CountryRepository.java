@@ -33,6 +33,8 @@ public interface CountryRepository<T, String extends Serializable> extends BaseE
    */
   Country getCountryByBaseId(String baseId);
 
+  Country getCountryByCountryCode(String countryCode);
+
 
   /**
    * Gets countries by region base id.

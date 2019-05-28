@@ -1,21 +1,19 @@
 package com.sap.ariba.cts.model.entity;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sap.ariba.cts.model.base.BaseEntity;
 import com.sap.ariba.cts.model.dto.RegionDto;
@@ -37,7 +35,8 @@ import java.util.Collection;
 @Entity
 @Table(name = "REGIONS")
 @ClassMetaProperty(code = "REG")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Region extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -60,11 +59,11 @@ public class Region extends BaseEntity implements Serializable {
   @Column(name = "REGION_NAME")
   private String regionName;
 
-  @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, orphanRemoval = false)
+  @OneToMany(mappedBy = "region")
   @JsonManagedReference
   private Collection<Department> departments;
 
-  @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "region")
   @JsonManagedReference
   private Collection<Country> countries;
 
@@ -76,7 +75,7 @@ public class Region extends BaseEntity implements Serializable {
   }
 
 
-  public Region(String baseId,boolean active, @NotBlank String regionCode, @NotBlank String regionName) {
+  public Region(String baseId, boolean active, String regionCode, String regionName) {
     super(active);
     this.baseId = baseId;
     this.regionCode = regionCode;

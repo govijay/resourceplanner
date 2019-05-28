@@ -8,12 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sap.ariba.cts.model.entity.Department;
 import com.sap.ariba.cts.model.entity.Region;
+import com.sap.ariba.cts.model.entity.Team;
 import com.sap.ariba.cts.repository.DepartmentRepository;
 import com.sap.ariba.cts.repository.RegionRepository;
 import com.sap.ariba.cts.service.DepartmentService;
 import com.sap.ariba.cts.utils.GenericUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -99,9 +101,16 @@ public class DepartmentServiceImpl implements DepartmentService {
   @Override
   public Boolean deleteDepartment(String baseId) {
     Department deptToHardDelete = departmentRepo.getDepartmentByBaseId(baseId);
-
     if (deptToHardDelete != null) {
       departmentRepo.delete(deptToHardDelete);
+    }
+    if (deptToHardDelete != null) {
+      Collection<Team> teams = (Collection<Team>) deptToHardDelete.getTeams();
+      if (!teams.isEmpty()) {
+        for (Team team : teams) {
+          team.setDepartment(null);
+        }
+      }
     }
     return true;
   }

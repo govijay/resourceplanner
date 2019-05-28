@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,26 +18,26 @@ import com.sap.ariba.cts.utils.Constants;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping(path = Constants.USERINFO, 
-                consumes = MediaType.APPLICATION_JSON_VALUE, 
-                produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = Constants.USERINFO,
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserInfoController {
 	
 	Logger logger = Logger.getLogger(UserInfoController.class.getSimpleName());
 	
 	@Autowired
-	UserInfoService userInfoServiceImpl;
-	
-	@PostMapping
-	public ResponseEntity<UserResponse> addUser(@RequestBody UserInfo user) {
+    UserInfoService userInfoServiceImpl;
+
+  @PostMapping
+  public ResponseEntity<UserResponse> addUser(@RequestBody UserInfo user) {
 		logger.info("create method is called");
-		UserResponse response = userInfoServiceImpl.addUser(user);
-		if(response.getStatus().equals(Status.OK)) {
-		    return new ResponseEntity<UserResponse>(response, HttpStatus.OK);
-		} else {
-		    return new ResponseEntity<UserResponse>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
+    UserResponse response = userInfoServiceImpl.addUser(user);
+    if (response.getStatus().equals(Status.OK)) {
+      return new ResponseEntity<UserResponse>(response, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<UserResponse>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 	}
 	
 

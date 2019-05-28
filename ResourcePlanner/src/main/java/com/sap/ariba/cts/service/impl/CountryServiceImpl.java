@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sap.ariba.cts.model.entity.City;
 import com.sap.ariba.cts.model.entity.Country;
 import com.sap.ariba.cts.model.entity.Region;
 import com.sap.ariba.cts.repository.CountryRepository;
@@ -14,6 +15,7 @@ import com.sap.ariba.cts.service.CountryService;
 import com.sap.ariba.cts.utils.GenericUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -99,6 +101,14 @@ public class CountryServiceImpl implements CountryService {
 
     if (ctryToHardDelete != null) {
       countryRepo.delete(ctryToHardDelete);
+    }
+    if (ctryToHardDelete != null) {
+      Collection<City> cities = (Collection<City>) ctryToHardDelete.getCities();
+      if (!cities.isEmpty()) {
+        for (City city : cities) {
+          city.setCountry(null);
+        }
+      }
     }
     return true;
   }

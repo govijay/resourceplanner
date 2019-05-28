@@ -13,5 +13,5 @@ import com.sap.ariba.cts.model.entity.UserInfo;
 @Repository
 @Transactional
 public interface UserInfoRepository extends JpaRepository<UserInfo, String> {
-
+  UserInfo getUserInfoByUserId(String userId);
 }

@@ -16,8 +16,7 @@ import java.util.Date;
 
 
 /**
- * UserInfo Entity to hold user details 
- *
+ * UserInfo Entity to hold user details
  */
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -25,28 +24,28 @@ public class UserInfo {
 
   @Version
   private Integer version;
-    
-	@Id
-	@Column(name="USER_ID")
-	private String userId;
 
-	@Column(name="FIRST_NAME")
-	private String firstName;
-	
-	@Column(name="LAST_NAME")
-	private String lastName;
-	
-	@Column(name="MIDDLE_NAME")
-	private String middleName;
-	
-	@Column(name="EMAIL")
-	private String email;
-	
-	@Column(name="COUNTRY_CODE")
-	private Country country;
-	
-	@Column(name="CITY_CODE")
-	private City city;
+  @Id
+  @Column(name = "USER_ID")
+  private String userId;
+
+  @Column(name = "FIRST_NAME")
+  private String firstName;
+
+  @Column(name = "LAST_NAME")
+  private String lastName;
+
+  @Column(name = "MIDDLE_NAME")
+  private String middleName;
+
+  @Column(name = "EMAIL")
+  private String email;
+
+  @Column(name = "COUNTRY_CODE")
+  private Country country;
+
+  @Column(name = "CITY_CODE")
+  private City city;
 
   @Column(name = "CREATED_DATE")
   @Temporal(TemporalType.TIMESTAMP)
@@ -70,84 +69,84 @@ public class UserInfo {
   }
 
   public String getUserId() {
-		return userId;
-	}
+    return userId;
+  }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
 
-	public String getFirstName() {
-		return firstName;
-	}
+  public String getFirstName() {
+    return firstName;
+  }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-	public String getLastName() {
-		return lastName;
-	}
+  public String getLastName() {
+    return lastName;
+  }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-	public String getMiddleName() {
-		return middleName;
-	}
+  public String getMiddleName() {
+    return middleName;
+  }
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
+  public void setMiddleName(String middleName) {
+    this.middleName = middleName;
+  }
 
-	public String getEmail() {
-		return email;
-	}
+  public String getEmail() {
+    return email;
+  }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-	public Country getCountry() {
-		return country;
-	}
+  public Country getCountry() {
+    return country;
+  }
 
-	public void setCountry(Country country) {
-		this.country = country;
-	}
+  public void setCountry(Country country) {
+    this.country = country;
+  }
 
-	public City getCity() {
-		return city;
-	}
+  public City getCity() {
+    return city;
+  }
 
-	public void setCity(City city) {
-		this.city = city;
-	}
-	 
-	public boolean isActive() {
-		return active;
-	}
+  public void setCity(City city) {
+    this.city = city;
+  }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+  public boolean isActive() {
+    return active;
+  }
 
-	public Date getCreatedOn() {
-		return createdOn;
-	}
+  public void setActive(boolean active) {
+    this.active = active;
+  }
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
+  public Date getCreatedOn() {
+    return createdOn;
+  }
 
-	public Date getLastModified() {
-		return lastModified;
-	}
+  public void setCreatedOn(Date createdOn) {
+    this.createdOn = createdOn;
+  }
 
-	public void setLastModified(Date lastModified) {
-		this.lastModified = lastModified;
-	}
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
 
 
 }

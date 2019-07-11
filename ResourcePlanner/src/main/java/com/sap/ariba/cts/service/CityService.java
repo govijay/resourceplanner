@@ -7,27 +7,27 @@ import java.util.List;
 
 public interface CityService {
 
-  Long countCities();
+    Long countCities();
 
-  City createCity(City city);
+    City createCity(City city);
 
-  City updateCity(City city);
+    City updateCity(City city);
 
-  City deactivateCity(String baseId);
+    City deactivateCity(String baseId);
 
-  City reactivateCity(String baseId);
+    City reactivateCity(String baseId);
 
-  Boolean deleteCity(String baseId);
+    Boolean deleteCity(String baseId);
 
-  Boolean isCityActive(String baseId);
+    Boolean isCityActive(String baseId);
 
-  Boolean isCityExists(String baseId);
+    Boolean isCityExists(String baseId);
 
-  City getCityByBaseId(String baseId);
+    City getCityByBaseId(String baseId);
 
-  Country getCountryByCityBaseId(String baseId);
+    Country getCountryByCityBaseId(String baseId);
 
-  List<City> getCities();
+    List<City> getCities();
 
-  List<City> getCitiesByCountryBaseId(String ctryBaseId);
+    List<City> getCitiesByCountryBaseId(String ctryBaseId);
 }

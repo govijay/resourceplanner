@@ -2,12 +2,12 @@ package com.sap.ariba.cts.service;
 
 public interface SetUpService {
 
-  void setUpRegion();
+    void setUpRegion();
 
-  void setUpCountries();
+    void setUpCountries();
 
-  void setUpCities();
+    void setUpCities();
 
-  void setUpAdminUser();
+    void setUpAdminUser();
 }
 

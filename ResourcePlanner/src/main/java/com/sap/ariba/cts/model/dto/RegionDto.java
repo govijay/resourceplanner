@@ -10,49 +10,49 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RegionDto extends BaseDto {
 
-  String regionCode;
+    String regionCode;
 
-  String regionName;
+    String regionName;
 
 
-  public RegionDto() {
-  }
-
-  public RegionDto(String baseId, boolean isActive, String regionCode, String regionName) {
-    super(baseId, isActive);
-    this.regionCode = regionCode;
-    this.regionName = regionName;
-  }
-
-  public String getRegionCode() {
-    return regionCode;
-  }
-
-  public void setRegionCode(String regionCode) {
-    this.regionCode = regionCode;
-  }
-
-  public String getRegionName() {
-    return regionName;
-  }
-
-  public void setRegionName(String regionName) {
-    this.regionName = regionName;
-  }
-
-  public static RegionDto toDto(Region region) {
-    return new RegionDto(region.getBaseId(),
-            region.isActive(),
-            region.getRegionCode(),
-            region.getRegionName());
-  }
-
-  public static List<RegionDto> toDto(List<Region> regions) {
-    List<RegionDto> regionDtos = new ArrayList<>();
-
-    for (Region region : regions) {
-      regionDtos.add(RegionDto.toDto(region));
+    public RegionDto() {
     }
-    return regionDtos;
-  }
+
+    public RegionDto(String baseId, boolean isActive, String regionCode, String regionName) {
+        super(baseId, isActive);
+        this.regionCode = regionCode;
+        this.regionName = regionName;
+    }
+
+    public static RegionDto toDto(Region region) {
+        return new RegionDto(region.getBaseId(),
+                region.isActive(),
+                region.getRegionCode(),
+                region.getRegionName());
+    }
+
+    public static List<RegionDto> toDto(List<Region> regions) {
+        List<RegionDto> regionDtos = new ArrayList<>();
+
+        for (Region region : regions) {
+            regionDtos.add(RegionDto.toDto(region));
+        }
+        return regionDtos;
+    }
+
+    public String getRegionCode() {
+        return regionCode;
+    }
+
+    public void setRegionCode(String regionCode) {
+        this.regionCode = regionCode;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
+    }
 }

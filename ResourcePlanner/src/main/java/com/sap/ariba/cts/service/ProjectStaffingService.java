@@ -9,36 +9,36 @@ import java.util.List;
 public interface ProjectStaffingService {
 
 
-  Long countProjectStaffing();
+    Long countProjectStaffing();
 
 
-  ProjectStaffing createProjectStaffing(ProjectStaffing projectStaffing);
+    ProjectStaffing createProjectStaffing(ProjectStaffing projectStaffing);
 
-  ProjectStaffing updateProjectStaffing(ProjectStaffing projectStaffing);
-
-
-  ProjectStaffing deactivateProjectStaffing(String baseId);
+    ProjectStaffing updateProjectStaffing(ProjectStaffing projectStaffing);
 
 
-  ProjectStaffing reactivateProjectStaffing(String baseId);
-
-  Boolean deleteProjectStaffing(String baseId);
+    ProjectStaffing deactivateProjectStaffing(String baseId);
 
 
-  ProjectStaffing getProjectStaffingByBaseId(String baseId);
+    ProjectStaffing reactivateProjectStaffing(String baseId);
+
+    Boolean deleteProjectStaffing(String baseId);
 
 
-  List<ProjectStaffing> getProjectStaffingByCustomerName(String customerName);
+    ProjectStaffing getProjectStaffingByBaseId(String baseId);
 
-  List<ProjectStaffing> getProjectStaffingByRegion(Region region);
 
-  List<ProjectStaffing> getProjectStaffingByStaffOwner(UserInfo staffOwner);
+    List<ProjectStaffing> getProjectStaffingByCustomerName(String customerName);
 
-  List<ProjectStaffing> getProjectStaffing();
+    List<ProjectStaffing> getProjectStaffingByRegion(Region region);
 
-  Boolean isProjectStaffingExists(String baseId);
+    List<ProjectStaffing> getProjectStaffingByStaffOwner(UserInfo staffOwner);
 
-  Boolean isProjectStaffingExistsForCustomerName(String customerName);
+    List<ProjectStaffing> getProjectStaffing();
 
-  Boolean isProjectStaffingActive(String baseId);
+    Boolean isProjectStaffingExists(String baseId);
+
+    Boolean isProjectStaffingExistsForCustomerName(String customerName);
+
+    Boolean isProjectStaffingActive(String baseId);
 }

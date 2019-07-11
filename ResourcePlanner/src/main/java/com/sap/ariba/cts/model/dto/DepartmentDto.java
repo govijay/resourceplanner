@@ -10,78 +10,78 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DepartmentDto extends BaseDto {
 
-  String deptCode;
+    String deptCode;
 
-  String deptName;
+    String deptName;
 
-  RegionDto regionDto;
+    RegionDto regionDto;
 
-  String regionId;
+    String regionId;
 
-  public DepartmentDto() {
-  }
-
-  public DepartmentDto(String baseId, boolean isActive, String deptCode, String deptName) {
-    super(baseId, isActive);
-    this.deptCode = deptCode;
-    this.deptName = deptName;
-  }
-
-  public String getDeptCode() {
-    return deptCode;
-  }
-
-  public void setDeptCode(String deptCode) {
-    this.deptCode = deptCode;
-  }
-
-  public String getDeptName() {
-    return deptName;
-  }
-
-  public void setDeptName(String deptName) {
-    this.deptName = deptName;
-  }
-
-  public RegionDto getRegionDto() {
-    return regionDto;
-  }
-
-  public void setRegionDto(RegionDto regionDto) {
-    this.regionDto = regionDto;
-  }
-
-  public String getRegionId() {
-    return regionId;
-  }
-
-  public void setRegionId(String regionId) {
-    this.regionId = regionId;
-  }
-
-  public static DepartmentDto toDto(Department department) {
-
-    DepartmentDto departmentDto = new DepartmentDto(department.getBaseId(),
-              department.isActive(),
-              department.getDepartCode(),
-              department.getDepartName());
-    if(department.getRegion() != null){
-      RegionDto regionDto = RegionDto.toDto(department.getRegion());
-      departmentDto.setRegionDto(regionDto);
-      departmentDto.setRegionId(regionDto.getBaseId());
+    public DepartmentDto() {
     }
 
-    return departmentDto;
-  }
-
-  public static List<DepartmentDto> toDto(List<Department> departments) {
-    List<DepartmentDto> departmentDtos = new ArrayList<>();
-
-    for (Department department : departments) {
-      departmentDtos.add(DepartmentDto.toDto(department));
+    public DepartmentDto(String baseId, boolean isActive, String deptCode, String deptName) {
+        super(baseId, isActive);
+        this.deptCode = deptCode;
+        this.deptName = deptName;
     }
 
-    return departmentDtos;
-  }
+    public static DepartmentDto toDto(Department department) {
+
+        DepartmentDto departmentDto = new DepartmentDto(department.getBaseId(),
+                department.isActive(),
+                department.getDepartCode(),
+                department.getDepartName());
+        if (department.getRegion() != null) {
+            RegionDto regionDto = RegionDto.toDto(department.getRegion());
+            departmentDto.setRegionDto(regionDto);
+            departmentDto.setRegionId(regionDto.getBaseId());
+        }
+
+        return departmentDto;
+    }
+
+    public static List<DepartmentDto> toDto(List<Department> departments) {
+        List<DepartmentDto> departmentDtos = new ArrayList<>();
+
+        for (Department department : departments) {
+            departmentDtos.add(DepartmentDto.toDto(department));
+        }
+
+        return departmentDtos;
+    }
+
+    public String getDeptCode() {
+        return deptCode;
+    }
+
+    public void setDeptCode(String deptCode) {
+        this.deptCode = deptCode;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public RegionDto getRegionDto() {
+        return regionDto;
+    }
+
+    public void setRegionDto(RegionDto regionDto) {
+        this.regionDto = regionDto;
+    }
+
+    public String getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(String regionId) {
+        this.regionId = regionId;
+    }
 
 }

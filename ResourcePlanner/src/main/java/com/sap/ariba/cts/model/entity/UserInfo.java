@@ -1,22 +1,12 @@
 package com.sap.ariba.cts.model.entity;
 
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
-
+import com.sap.ariba.cts.model.dto.UserInfoDto;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.sap.ariba.cts.model.dto.UserInfoDto;
-
+import javax.persistence.*;
 import java.util.Date;
 
 
@@ -29,148 +19,148 @@ import java.util.Date;
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class UserInfo {
 
-  @Version
-  private Integer version;
+    @Version
+    private Integer version;
 
-  @Id
-  @Column(name = "USER_ID")
-  private String userId;
+    @Id
+    @Column(name = "USER_ID")
+    private String userId;
 
-  @Column(name = "FIRST_NAME")
-  private String firstName;
+    @Column(name = "FIRST_NAME")
+    private String firstName;
 
-  @Column(name = "LAST_NAME")
-  private String lastName;
+    @Column(name = "LAST_NAME")
+    private String lastName;
 
-  @Column(name = "MIDDLE_NAME")
-  private String middleName;
+    @Column(name = "MIDDLE_NAME")
+    private String middleName;
 
-  @Column(name = "EMAIL")
-  private String email;
+    @Column(name = "EMAIL")
+    private String email;
 
-  @Column(name = "CREATED_DATE")
-  @Temporal(TemporalType.TIMESTAMP)
-  @CreatedDate
-  private Date createdOn;
+    @Column(name = "CREATED_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date createdOn;
 
-  @Column(name = "LAST_MODIFIED")
-  @Temporal(TemporalType.TIMESTAMP)
-  @LastModifiedDate
-  private Date lastModified;
+    @Column(name = "LAST_MODIFIED")
+    @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
+    private Date lastModified;
 
-  @Column(name = "ACTIVE")
-  private boolean active;
+    @Column(name = "ACTIVE")
+    private boolean active;
 
-  public UserInfo() {
-  }
+    public UserInfo() {
+    }
 
-  public UserInfo(String userId, String firstName, String lastName, String middleName, String email, boolean active) {
-    this.userId = userId;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.middleName = middleName;
-    this.email = email;
-    this.active = active;
-  }
+    public UserInfo(String userId, String firstName, String lastName, String middleName, String email, boolean active) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.email = email;
+        this.active = active;
+    }
 
-  public Integer getVersion() {
-    return version;
-  }
+    public static UserInfo toEntity(UserInfoDto userInfoDto) {
+        UserInfo userInfo = new UserInfo(
+                userInfoDto.getUserId(),
+                userInfoDto.getFirstName(),
+                userInfoDto.getLastName(),
+                userInfoDto.getMiddleName(),
+                userInfoDto.getEmail(),
+                userInfoDto.isActive());
+        return userInfo;
+    }
 
-  public void setVersion(Integer version) {
-    this.version = version;
-  }
+    public Integer getVersion() {
+        return version;
+    }
 
-  public String getUserId() {
-    return userId;
-  }
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
+    public String getUserId() {
+        return userId;
+    }
 
-  public String getFirstName() {
-    return firstName;
-  }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public String getMiddleName() {
-    return middleName;
-  }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-  public void setMiddleName(String middleName) {
-    this.middleName = middleName;
-  }
+    public String getMiddleName() {
+        return middleName;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  public boolean isActive() {
-    return active;
-  }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-  public void setActive(boolean active) {
-    this.active = active;
-  }
+    public boolean isActive() {
+        return active;
+    }
 
-  public Date getCreatedOn() {
-    return createdOn;
-  }
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-  public void setCreatedOn(Date createdOn) {
-    this.createdOn = createdOn;
-  }
+    public Date getCreatedOn() {
+        return createdOn;
+    }
 
-  public Date getLastModified() {
-    return lastModified;
-  }
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
 
-  public void setLastModified(Date lastModified) {
-    this.lastModified = lastModified;
-  }
+    public Date getLastModified() {
+        return lastModified;
+    }
 
-  /**
-   * Pre persist.
-   */
-  @PrePersist
-  public void prePersist() {
-    this.setActive(true);
-  }
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
 
-  @Override
-  public String toString() {
-    return "UserInfo{" +
-            "userId='" + userId + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", middleName='" + middleName + '\'' +
-            '}';
-  }
+    /**
+     * Pre persist.
+     */
+    @PrePersist
+    public void prePersist() {
+        this.setActive(true);
+    }
 
-  public static UserInfo toEntity(UserInfoDto userInfoDto) {
-    UserInfo userInfo =  new UserInfo(
-            userInfoDto.getUserId(),
-            userInfoDto.getFirstName(),
-            userInfoDto.getLastName(),
-            userInfoDto.getMiddleName(),
-            userInfoDto.getEmail(),
-            userInfoDto.isActive());
-    return userInfo;
-  }
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userId='" + userId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                '}';
+    }
 }

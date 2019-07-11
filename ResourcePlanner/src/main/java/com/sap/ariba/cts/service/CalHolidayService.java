@@ -9,36 +9,36 @@ import java.util.List;
 public interface CalHolidayService {
 
 
-  Long countCalHolidays();
+    Long countCalHolidays();
 
-  CalHoliday createCalHoliday(CalHoliday calHoliday);
-
-
-  CalHoliday updateCalHoliday(CalHoliday calHoliday);
-
-  CalHoliday deactivateCalHoliday(String baseId);
-
-  CalHoliday reactivateCalHoliday(String baseId);
-
-  Boolean deleteCalHoliday(String baseId);
+    CalHoliday createCalHoliday(CalHoliday calHoliday);
 
 
-  Boolean isCalHolidayActive(String baseId);
+    CalHoliday updateCalHoliday(CalHoliday calHoliday);
+
+    CalHoliday deactivateCalHoliday(String baseId);
+
+    CalHoliday reactivateCalHoliday(String baseId);
+
+    Boolean deleteCalHoliday(String baseId);
 
 
-  Boolean isCalHolidayExists(String baseId);
-
-  Boolean isCalHolidayExistsByDate(Date cdate);
+    Boolean isCalHolidayActive(String baseId);
 
 
-  CalHoliday getCalHolidayByBaseId(String baseId);
+    Boolean isCalHolidayExists(String baseId);
 
-  CalHoliday getCalHolidayByDate(Date holDate);
+    Boolean isCalHolidayExistsByDate(Date cdate);
 
 
-  List<CalHoliday> getCalHolidays();
+    CalHoliday getCalHolidayByBaseId(String baseId);
 
-  List<CalHoliday> getCalHolidaysByCountry(Country country);
+    CalHoliday getCalHolidayByDate(Date holDate);
 
-  List<CalHoliday> getCalHolidaysByYear(int year);
+
+    List<CalHoliday> getCalHolidays();
+
+    List<CalHoliday> getCalHolidaysByCountry(Country country);
+
+    List<CalHoliday> getCalHolidaysByYear(int year);
 }

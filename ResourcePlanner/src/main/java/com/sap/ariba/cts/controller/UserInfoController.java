@@ -1,19 +1,14 @@
 package com.sap.ariba.cts.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sap.ariba.cts.model.dto.UserInfoDto;
 import com.sap.ariba.cts.model.entity.UserInfo;
 import com.sap.ariba.cts.service.impl.UserInfoServiceImpl;
 import com.sap.ariba.cts.utils.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Logger;
 
@@ -24,17 +19,17 @@ import java.util.logging.Logger;
 @CrossOrigin
 public class UserInfoController {
 
-  Logger logger = Logger.getLogger(UserInfoController.class.getSimpleName());
+    Logger logger = Logger.getLogger(UserInfoController.class.getSimpleName());
 
-  @Autowired
-  UserInfoServiceImpl userInfoService;
+    @Autowired
+    UserInfoServiceImpl userInfoService;
 
-  @PostMapping
-  public ResponseEntity<UserInfoDto> addUser(@RequestBody UserInfoDto userInfoDto) {
-    logger.info("create method is called");
-    UserInfo userInfo = userInfoService.addUser(UserInfo.toEntity(userInfoDto));
-    return new ResponseEntity<>(UserInfoDto.toDto(userInfo), HttpStatus.OK);
-  }
+    @PostMapping
+    public ResponseEntity<UserInfoDto> addUser(@RequestBody UserInfoDto userInfoDto) {
+        logger.info("create method is called");
+        UserInfo userInfo = userInfoService.addUser(UserInfo.toEntity(userInfoDto));
+        return new ResponseEntity<>(UserInfoDto.toDto(userInfo), HttpStatus.OK);
+    }
 
 
 }

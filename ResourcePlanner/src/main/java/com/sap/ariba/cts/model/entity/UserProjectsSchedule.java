@@ -1,24 +1,13 @@
 package com.sap.ariba.cts.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 import com.sap.ariba.cts.model.base.BaseEntity;
 import com.sap.ariba.cts.model.dto.UserProjectsScheduleDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
 import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -26,162 +15,162 @@ import java.util.Date;
 @ClassMetaProperty(code = "UPS")
 public class UserProjectsSchedule extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "upsSequenceGenerator")
-  @GenericGenerator(name = "upsSequenceGenerator",
-          strategy = "com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator",
-          parameters = {
-                  @Parameter(name = EntitySequenceNumberGenerator.SEQUENCE_PARAM, value = "ups_seq"),
-                  @Parameter(name = EntitySequenceNumberGenerator.INITIAL_PARAM, value = "1000"),
-                  @Parameter(name = EntitySequenceNumberGenerator.INCREMENT_PARAM, value = "1")
-          })
-  @Column(name = "BASE_ID")
-  private String baseId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "upsSequenceGenerator")
+    @GenericGenerator(name = "upsSequenceGenerator",
+            strategy = "com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator",
+            parameters = {
+                    @Parameter(name = EntitySequenceNumberGenerator.SEQUENCE_PARAM, value = "ups_seq"),
+                    @Parameter(name = EntitySequenceNumberGenerator.INITIAL_PARAM, value = "1000"),
+                    @Parameter(name = EntitySequenceNumberGenerator.INCREMENT_PARAM, value = "1")
+            })
+    @Column(name = "BASE_ID")
+    private String baseId;
 
-  @OneToOne
-  private UserDetails userDetails;
+    @OneToOne
+    private UserDetails userDetails;
 
-  @OneToOne
-  private ProjectStaffing projectStaffing;
+    @OneToOne
+    private ProjectStaffing projectStaffing;
 
-  @Column(name = "TOTAL_HRS")
-  private int totalHrs;
+    @Column(name = "TOTAL_HRS")
+    private int totalHrs;
 
-  @Column(name = "HRS_PER_DAY")
-  private int hrsPerDay;
+    @Column(name = "HRS_PER_DAY")
+    private int hrsPerDay;
 
-  @Column(name = "STARTDATE")
-  private Date startDate;
+    @Column(name = "STARTDATE")
+    private Date startDate;
 
-  @Column(name = "ENDDATE")
-  private Date endDate;
+    @Column(name = "ENDDATE")
+    private Date endDate;
 
-  @Column(name = "NOTES")
-  private String notes;
+    @Column(name = "NOTES")
+    private String notes;
 
-  @Enumerated(value = EnumType.ORDINAL)
-  @Column(name = "TASK_TYPE")
-  private TaskType taskType;
+    @Enumerated(value = EnumType.ORDINAL)
+    @Column(name = "TASK_TYPE")
+    private TaskType taskType;
 
-  /**
-   * Instantiates a new Base entity.
-   */
-  public UserProjectsSchedule() {
-  }
+    /**
+     * Instantiates a new Base entity.
+     */
+    public UserProjectsSchedule() {
+    }
 
-  /**
-   * Instantiates a new Base entity.
-   *
-   * @param active the active
-   */
-  public UserProjectsSchedule(boolean active ,String baseId, UserDetails userDetails, ProjectStaffing projectStaffing,
-                              int totalHrs, int hrsPerDay, Date startDate, Date endDate, String notes,
+    /**
+     * Instantiates a new Base entity.
+     *
+     * @param active the active
+     */
+    public UserProjectsSchedule(boolean active, String baseId, UserDetails userDetails, ProjectStaffing projectStaffing,
+                                int totalHrs, int hrsPerDay, Date startDate, Date endDate, String notes,
                                 TaskType taskType) {
-    super(active);
-    this.baseId = baseId;
-    this.userDetails = userDetails;
-    this.projectStaffing = projectStaffing;
-    this.totalHrs = totalHrs;
-    this.hrsPerDay = hrsPerDay;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.notes = notes;
-    this.taskType = taskType;
-  }
+        super(active);
+        this.baseId = baseId;
+        this.userDetails = userDetails;
+        this.projectStaffing = projectStaffing;
+        this.totalHrs = totalHrs;
+        this.hrsPerDay = hrsPerDay;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.notes = notes;
+        this.taskType = taskType;
+    }
 
-  public String getBaseId() {
-    return baseId;
-  }
+    public static UserProjectsSchedule toEntity(UserProjectsScheduleDto userProjectsScheduleDto) {
+        UserProjectsSchedule userProjectsSchedule = new UserProjectsSchedule(
+                userProjectsScheduleDto.isActive(),
+                userProjectsScheduleDto.getBaseId(),
+                UserDetails.toEntity(userProjectsScheduleDto.getUserDetails()),
+                ProjectStaffing.toEntity(userProjectsScheduleDto.getProjectStaffing()),
+                userProjectsScheduleDto.getTotalHrs(),
+                userProjectsScheduleDto.getHrsPerDay(),
+                userProjectsScheduleDto.getStartDate(),
+                userProjectsScheduleDto.getEndDate(),
+                userProjectsScheduleDto.getNotes(),
+                userProjectsScheduleDto.getTaskType());
 
-  public void setBaseId(String baseId) {
-    this.baseId = baseId;
-  }
+        return userProjectsSchedule;
+    }
 
-  public UserDetails getUserDetails() {
-    return userDetails;
-  }
+    public String getBaseId() {
+        return baseId;
+    }
 
-  public void setUserDetails(UserDetails userDetails) {
-    this.userDetails = userDetails;
-  }
+    public void setBaseId(String baseId) {
+        this.baseId = baseId;
+    }
 
-  public ProjectStaffing getProjectStaffing() {
-    return projectStaffing;
-  }
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
 
-  public void setProjectStaffing(ProjectStaffing projectStaffing) {
-    this.projectStaffing = projectStaffing;
-  }
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
+    }
 
-  public int getTotalHrs() {
-    return totalHrs;
-  }
+    public ProjectStaffing getProjectStaffing() {
+        return projectStaffing;
+    }
 
-  public void setTotalHrs(int totalHrs) {
-    this.totalHrs = totalHrs;
-  }
+    public void setProjectStaffing(ProjectStaffing projectStaffing) {
+        this.projectStaffing = projectStaffing;
+    }
 
-  public int getHrsPerDay() {
-    return hrsPerDay;
-  }
+    public int getTotalHrs() {
+        return totalHrs;
+    }
 
-  public void setHrsPerDay(int hrsPerDay) {
-    this.hrsPerDay = hrsPerDay;
-  }
+    public void setTotalHrs(int totalHrs) {
+        this.totalHrs = totalHrs;
+    }
 
-  public Date getStartDate() {
-    return startDate;
-  }
+    public int getHrsPerDay() {
+        return hrsPerDay;
+    }
 
-  public void setStartDate(Date startDate) {
-    this.startDate = startDate;
-  }
+    public void setHrsPerDay(int hrsPerDay) {
+        this.hrsPerDay = hrsPerDay;
+    }
 
-  public Date getEndDate() {
-    return endDate;
-  }
+    public Date getStartDate() {
+        return startDate;
+    }
 
-  public void setEndDate(Date endDate) {
-    this.endDate = endDate;
-  }
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-  public String getNotes() {
-    return notes;
-  }
+    public Date getEndDate() {
+        return endDate;
+    }
 
-  public void setNotes(String notes) {
-    this.notes = notes;
-  }
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
-  public TaskType getTaskType() {
-    return taskType;
-  }
+    public String getNotes() {
+        return notes;
+    }
 
-  public void setTaskType(TaskType taskType) {
-    this.taskType = taskType;
-  }
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
-  /**
-   * Pre persist.
-   */
-  @PrePersist
-  public void prePersist() {
-    this.setActive(true);
-  }
+    public TaskType getTaskType() {
+        return taskType;
+    }
 
-  public static UserProjectsSchedule toEntity(UserProjectsScheduleDto userProjectsScheduleDto) {
-    UserProjectsSchedule userProjectsSchedule = new UserProjectsSchedule(
-            userProjectsScheduleDto.isActive(),
-            userProjectsScheduleDto.getBaseId(),
-            UserDetails.toEntity(userProjectsScheduleDto.getUserDetails()),
-            ProjectStaffing.toEntity(userProjectsScheduleDto.getProjectStaffing()),
-            userProjectsScheduleDto.getTotalHrs(),
-            userProjectsScheduleDto.getHrsPerDay(),
-            userProjectsScheduleDto.getStartDate(),
-            userProjectsScheduleDto.getEndDate(),
-            userProjectsScheduleDto.getNotes(),
-            userProjectsScheduleDto.getTaskType());
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
+    }
 
-    return userProjectsSchedule;
-  }
+    /**
+     * Pre persist.
+     */
+    @PrePersist
+    public void prePersist() {
+        this.setActive(true);
+    }
 }

@@ -1,9 +1,8 @@
 package com.sap.ariba.cts.repository;
 
+import com.sap.ariba.cts.model.entity.JobRole;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import com.sap.ariba.cts.model.entity.JobRole;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,10 +18,10 @@ import java.util.List;
 @Repository
 public interface JobRoleRepository<T, String extends Serializable> extends BaseEntityRepository<JobRole, String> {
 
-  @Override
-  @Query("select jr from JobRole jr where jr.active=true")
-  List<JobRole> getActiveEntity();
+    @Override
+    @Query("select jr from JobRole jr where jr.active=true")
+    List<JobRole> getActiveEntity();
 
-  JobRole getJobRoleByBaseId(String baseId);
+    JobRole getJobRoleByBaseId(String baseId);
 
 }

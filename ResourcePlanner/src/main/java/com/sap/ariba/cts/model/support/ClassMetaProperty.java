@@ -15,10 +15,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface ClassMetaProperty {
 
-  /**
-   * Class code to identify or categorize the primary root id of entity objects.
-   *
-   * @return String Shorthand notation of the entity object.
-   */
-  String code() default "UNDEFINED";
+    /**
+     * Class code to identify or categorize the primary root id of entity objects.
+     *
+     * @return String Shorthand notation of the entity object.
+     */
+    String code() default "UNDEFINED";
 }

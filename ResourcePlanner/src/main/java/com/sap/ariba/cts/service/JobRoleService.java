@@ -12,26 +12,26 @@ import java.util.List;
  */
 public interface JobRoleService {
 
-  Long countJobRoles();
+    Long countJobRoles();
 
-  JobRole createJobRole(JobRole jobRole);
+    JobRole createJobRole(JobRole jobRole);
 
-  JobRole updateJobRole(JobRole jobRole);
+    JobRole updateJobRole(JobRole jobRole);
 
-  JobRole deactivateJobRole(String baseId);
+    JobRole deactivateJobRole(String baseId);
 
-  JobRole reactivateJobRole(String baseId);
+    JobRole reactivateJobRole(String baseId);
 
-  Boolean deleteJobRole(String baseId);
-
-
-  Boolean isJobRoleActive(String baseId);
-
-  Boolean isJobRoleExists(String baseId);
+    Boolean deleteJobRole(String baseId);
 
 
-  JobRole getJobRoleByBaseId(String baseId);
+    Boolean isJobRoleActive(String baseId);
 
-  List<JobRole> getJobRoles();
+    Boolean isJobRoleExists(String baseId);
+
+
+    JobRole getJobRoleByBaseId(String baseId);
+
+    List<JobRole> getJobRoles();
 
 }

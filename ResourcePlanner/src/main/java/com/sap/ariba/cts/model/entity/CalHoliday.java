@@ -1,131 +1,123 @@
 package com.sap.ariba.cts.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-
+import com.sap.ariba.cts.model.base.BaseEntity;
+import com.sap.ariba.cts.model.dto.CalHolidayDto;
+import com.sap.ariba.cts.model.support.ClassMetaProperty;
+import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.sap.ariba.cts.model.base.BaseEntity;
-import com.sap.ariba.cts.model.dto.CalendarHolidayDto;
-import com.sap.ariba.cts.model.support.ClassMetaProperty;
-import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
-
+import javax.persistence.*;
 import java.util.Date;
 
 
 @Entity
 @Table(name = "HOLIDAY")
 @ClassMetaProperty(code = "H")
-public class CalendarHoliday extends BaseEntity {
+public class CalHoliday extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "holidaySequenceGenerator")
-  @GenericGenerator(name = "holidaySequenceGenerator",
-          strategy = "com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator",
-          parameters = {
-                  @Parameter(name = EntitySequenceNumberGenerator.SEQUENCE_PARAM, value = "holiday_seq"),
-                  @Parameter(name = EntitySequenceNumberGenerator.INITIAL_PARAM, value = "1000"),
-                  @Parameter(name = EntitySequenceNumberGenerator.INCREMENT_PARAM, value = "1")
-          })
-  @Column(name = "BASE_ID")
-  String baseId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "holidaySequenceGenerator")
+    @GenericGenerator(name = "holidaySequenceGenerator",
+            strategy = "com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator",
+            parameters = {
+                    @Parameter(name = EntitySequenceNumberGenerator.SEQUENCE_PARAM, value = "holiday_seq"),
+                    @Parameter(name = EntitySequenceNumberGenerator.INITIAL_PARAM, value = "1000"),
+                    @Parameter(name = EntitySequenceNumberGenerator.INCREMENT_PARAM, value = "1")
+            })
+    @Column(name = "BASE_ID")
+    String baseId;
 
-  @Column(name = "YEAR")
-  long calYear;
+    @Column(name = "YEAR")
+    int calYear;
 
-  @Column(name = "NAME")
-  String holName;
+    @Column(name = "NAME")
+    String holName;
 
-  @Column(name = "DATE")
-  Date holDate;
+    @Column(name = "DATE")
+    Date holDate;
 
-  @Column(name = "COUNTRY")
-  Country country;
+    @OneToOne
+    Country country;
 
-  /**
-   * Instantiates a new Base entity.
-   */
-  public CalendarHoliday() {
-  }
+    /**
+     * Instantiates a new Base entity.
+     */
+    public CalHoliday() {
+    }
 
-  /**
-   * Instantiates a new Base entity.
-   *
-   * @param active the active
-   */
-  public CalendarHoliday(boolean active,String baseId, long calYear, String holName, Date holDate, Country country) {
-    super(active);
-    this.baseId = baseId;
-    this.calYear = calYear;
-    this.holName = holName;
-    this.holDate = holDate;
-    this.country = country;
-  }
+    /**
+     * Instantiates a new Base entity.
+     *
+     * @param active the active
+     */
+    public CalHoliday(boolean active, String baseId, int calYear, String holName, Date holDate, Country country) {
+        super(active);
+        this.baseId = baseId;
+        this.calYear = calYear;
+        this.holName = holName;
+        this.holDate = holDate;
+        this.country = country;
+    }
 
-  public String getBaseId() {
-    return baseId;
-  }
+    public static CalHoliday toEntity(CalHolidayDto calHolidayDto) {
 
-  public void setBaseId(String baseId) {
-    this.baseId = baseId;
-  }
+        CalHoliday calHoliday = new CalHoliday(
+                calHolidayDto.isActive(),
+                calHolidayDto.getBaseId(),
+                calHolidayDto.getCalYear(),
+                calHolidayDto.getHolName(),
+                calHolidayDto.getHolDate(),
+                Country.toEntity(calHolidayDto.getCountry()));
 
-  public long getCalYear() {
-    return calYear;
-  }
+        return calHoliday;
+    }
 
-  public void setCalYear(long calYear) {
-    this.calYear = calYear;
-  }
+    public String getBaseId() {
+        return baseId;
+    }
 
-  public String getHolName() {
-    return holName;
-  }
+    public void setBaseId(String baseId) {
+        this.baseId = baseId;
+    }
 
-  public void setHolName(String holName) {
-    this.holName = holName;
-  }
+    public int getCalYear() {
+        return calYear;
+    }
 
-  public Date getHolDate() {
-    return holDate;
-  }
+    public void setCalYear(int calYear) {
+        this.calYear = calYear;
+    }
 
-  public void setHolDate(Date holDate) {
-    this.holDate = holDate;
-  }
+    public String getHolName() {
+        return holName;
+    }
 
-  public Country getCountry() {
-    return country;
-  }
+    public void setHolName(String holName) {
+        this.holName = holName;
+    }
 
-  public void setCountry(Country country) {
-    this.country = country;
-  }
+    public Date getHolDate() {
+        return holDate;
+    }
 
-  /**
-   * Pre persist.
-   */
-  @PrePersist
-  public void prePersist() {
-    this.setActive(true);
-  }
+    public void setHolDate(Date holDate) {
+        this.holDate = holDate;
+    }
 
-  public static CalendarHoliday toEntity(CalendarHolidayDto calendarHolidayDto) {
+    public Country getCountry() {
+        return country;
+    }
 
-    CalendarHoliday calendarHoliday = new CalendarHoliday(
-            calendarHolidayDto.isActive(),
-            calendarHolidayDto.getBaseId(),
-            calendarHolidayDto.getCalYear(),
-            calendarHolidayDto.getHolName(),
-            calendarHolidayDto.getHolDate(),
-            Country.toEntity(calendarHolidayDto.getCountry()));
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 
-    return calendarHoliday;
-  }
+    /**
+     * Pre persist.
+     */
+    @PrePersist
+    public void prePersist() {
+        this.setActive(true);
+    }
 }

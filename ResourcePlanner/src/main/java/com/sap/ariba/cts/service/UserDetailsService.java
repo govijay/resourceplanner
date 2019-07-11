@@ -12,33 +12,33 @@ import java.util.List;
  */
 public interface UserDetailsService {
 
-  Long countUserDetails();
+    Long countUserDetails();
 
 
-  UserDetails createUserDetails(UserDetails userDetails);
+    UserDetails createUserDetails(UserDetails userDetails);
 
-  UserDetails updateUserDetails(UserDetails userDetails);
-
-
-  UserDetails deactivateUserDetails(String baseId);
+    UserDetails updateUserDetails(UserDetails userDetails);
 
 
-  UserDetails reactivateUserDetails(String baseId);
-
-  Boolean deleteUserDetails(String baseId);
+    UserDetails deactivateUserDetails(String baseId);
 
 
-  UserDetails getUserDetailsByBaseId(String baseId);
+    UserDetails reactivateUserDetails(String baseId);
+
+    Boolean deleteUserDetails(String baseId);
 
 
-  UserDetails getUserDetailsByUserId(String userId);
+    UserDetails getUserDetailsByBaseId(String baseId);
 
-  List<UserDetails> getUserDetails();
 
-  Boolean isUserDetailsExists(String baseId);
+    UserDetails getUserDetailsByUserId(String userId);
 
-  Boolean isUserDetailsExistsForUser(String userId);
+    List<UserDetails> getUserDetails();
 
-  Boolean isUserDetailsActive(String userId);
+    Boolean isUserDetailsExists(String baseId);
+
+    Boolean isUserDetailsExistsForUser(String userId);
+
+    Boolean isUserDetailsActive(String userId);
 
 }

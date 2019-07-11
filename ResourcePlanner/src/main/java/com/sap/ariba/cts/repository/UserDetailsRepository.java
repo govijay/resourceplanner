@@ -1,14 +1,8 @@
 package com.sap.ariba.cts.repository;
 
+import com.sap.ariba.cts.model.entity.*;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import com.sap.ariba.cts.model.entity.Department;
-import com.sap.ariba.cts.model.entity.Region;
-import com.sap.ariba.cts.model.entity.SubTeam;
-import com.sap.ariba.cts.model.entity.Team;
-import com.sap.ariba.cts.model.entity.UserDetails;
-import com.sap.ariba.cts.model.entity.UserInfo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,20 +18,22 @@ import java.util.List;
 @Repository
 public interface UserDetailsRepository<T, String extends Serializable> extends BaseEntityRepository<UserDetails, String> {
 
-  @Override
-  @Query("select usrd from UserDetails usrd where usrd.active=true")
-  List<UserDetails> getActiveEntity();
+    @Override
+    @Query("select usrd from UserDetails usrd where usrd.active=true")
+    List<UserDetails> getActiveEntity();
 
-  UserDetails getUserDetailsByBaseId(String baseId);
+    UserDetails getUserDetailsByBaseId(String baseId);
 
-  UserDetails getUserDetailsByUserInfo(UserInfo userInfo);
+    UserDetails getUserDetailsByUserInfo(UserInfo userInfo);
 
-  UserDetails getUserDetailsByRegion(Region region);
+    List<UserDetails> getUserDetailsByManagerInfo(UserInfo managerInfo);
 
-  UserDetails getUserDetailsByDepartment(Department department);
+    List<UserDetails> getUserDetailsByRegion(Region region);
 
-  UserDetails getUserDetailsByTeam(Team team);
+    List<UserDetails> getUserDetailsByDepartment(Department department);
 
-  UserDetails getUserDetailsBySubTeam(SubTeam subTeam);
+    List<UserDetails> getUserDetailsByTeam(Team team);
+
+    List<UserDetails> getUserDetailsBySubTeam(SubTeam subTeam);
 
 }

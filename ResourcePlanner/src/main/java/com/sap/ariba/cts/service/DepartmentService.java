@@ -13,54 +13,54 @@ import java.util.List;
  */
 public interface DepartmentService {
 
-  /**
-   * Count departments long.
-   *
-   * @return the long
-   */
-  Long countDepartments();
+    /**
+     * Count departments long.
+     *
+     * @return the long
+     */
+    Long countDepartments();
 
-  /**
-   * Create department.
-   *
-   * @param dept the dept
-   */
-  Department createDepartment(Department dept);
+    /**
+     * Create department.
+     *
+     * @param dept the dept
+     */
+    Department createDepartment(Department dept);
 
-  /**
-   * Update department.
-   *
-   * @param dept the dept
-   */
-  Department updateDepartment(Department dept);
-
-
-  Department deactivateDepartment(String baseId);
+    /**
+     * Update department.
+     *
+     * @param dept the dept
+     */
+    Department updateDepartment(Department dept);
 
 
-  Department reactivateDepartment(String baseId);
-
-  Boolean deleteDepartment(String baseId);
+    Department deactivateDepartment(String baseId);
 
 
-  Department getDepartmentByBaseId(String baseId);
+    Department reactivateDepartment(String baseId);
+
+    Boolean deleteDepartment(String baseId);
 
 
-  Region getRegionByDeptBaseId(String baseId);
-
-  /**
-   * Gets departments.
-   *
-   * @return the departments
-   */
-  List<Department> getDepartments();
+    Department getDepartmentByBaseId(String baseId);
 
 
-  List<Department> getDepartmentsByRegionBaseId(String regionBaseId);
+    Region getRegionByDeptBaseId(String baseId);
+
+    /**
+     * Gets departments.
+     *
+     * @return the departments
+     */
+    List<Department> getDepartments();
 
 
-  Boolean isDepartmentActive(String baseId);
+    List<Department> getDepartmentsByRegionBaseId(String regionBaseId);
 
-  Boolean isDepartmentExists(String baseId);
+
+    Boolean isDepartmentActive(String baseId);
+
+    Boolean isDepartmentExists(String baseId);
 
 }

@@ -12,70 +12,69 @@ import java.util.List;
  */
 public interface RegionService {
 
-  /**
-   * Count regions long.
-   *
-   * @return the long
-   */
-  Long countRegions();
+    /**
+     * Count regions long.
+     *
+     * @return the long
+     */
+    Long countRegions();
 
-  /**
-   * Create region.
-   *
-   * @param region the region
-   * @return
-   */
-  Region createRegion(Region region);
+    /**
+     * Create region.
+     *
+     * @param region the region
+     * @return
+     */
+    Region createRegion(Region region);
 
-  /**
-   * Update region.
-   *
-   * @param region the region
-   */
-  Region updateRegion(Region region);
+    /**
+     * Update region.
+     *
+     * @param region the region
+     */
+    Region updateRegion(Region region);
 
-  /**
-   * Deactivate region.
-   *
-   * @param regionCode the region code
-   */
-  Region deactivateRegion(String regionCode);
+    /**
+     * Deactivate region.
+     *
+     * @param regionCode the region code
+     */
+    Region deactivateRegion(String regionCode);
 
-  /**
-   * Reactivate region.
-   *
-   * @param regionCode the region code
-   */
-  Region reactivateRegion(String regionCode);
+    /**
+     * Reactivate region.
+     *
+     * @param regionCode the region code
+     */
+    Region reactivateRegion(String regionCode);
 
-  /**
-   * Delete region.
-   *
-   * @param regionCode the region code
-   */
-  Boolean deleteRegion(String regionCode);
-
-
-  Boolean isRegionActive(String baseId);
-
-  /**
-   * Is region exists boolean.
-   *
-   * @param baseId the region code
-   * @return the boolean
-   */
-  Boolean isRegionExists(String baseId);
+    /**
+     * Delete region.
+     *
+     * @param regionCode the region code
+     */
+    Boolean deleteRegion(String regionCode);
 
 
-  Region getRegionByBaseId(String baseId);
+    Boolean isRegionActive(String baseId);
+
+    /**
+     * Is region exists boolean.
+     *
+     * @param baseId the region code
+     * @return the boolean
+     */
+    Boolean isRegionExists(String baseId);
 
 
+    Region getRegionByBaseId(String baseId);
 
-  /**
-   * Gets regions.
-   *
-   * @return the regions
-   */
-  List<Region> getRegions();
+
+    /**
+     * Gets regions.
+     *
+     * @return the regions
+     */
+    List<Region> getRegions();
 
 }

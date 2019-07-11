@@ -7,27 +7,27 @@ import java.util.List;
 
 public interface CountryService {
 
-  Long countCountries();
+    Long countCountries();
 
-  Country createCountry(Country country);
+    Country createCountry(Country country);
 
-  Country updateCountry(Country country);
+    Country updateCountry(Country country);
 
-  Country deactivateCountry(String baseId);
+    Country deactivateCountry(String baseId);
 
-  Country reactivateCountry(String baseId);
+    Country reactivateCountry(String baseId);
 
-  Boolean deleteCountry(String baseId);
+    Boolean deleteCountry(String baseId);
 
-  Boolean isCountryActive(String baseId);
+    Boolean isCountryActive(String baseId);
 
-  Boolean isCountryExists(String baseId);
+    Boolean isCountryExists(String baseId);
 
-  Country getCountryByBaseId(String baseId);
+    Country getCountryByBaseId(String baseId);
 
-  Region getRegionByCountryBaseId(String baseId);
+    Region getRegionByCountryBaseId(String baseId);
 
-  List<Country> getCountries();
+    List<Country> getCountries();
 
-  List<Country> getCountriesByRegionBaseId(String regionBaseId);
+    List<Country> getCountriesByRegionBaseId(String regionBaseId);
 }

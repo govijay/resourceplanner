@@ -7,32 +7,30 @@ import java.util.List;
 
 public interface TeamService {
 
-  Long countTeams();
+    Long countTeams();
 
-  Team createTeam(Team team);
+    Team createTeam(Team team);
 
-  Team updateTeam(Team team);
+    Team updateTeam(Team team);
 
-  Team deactivateTeam(String baseId);
+    Team deactivateTeam(String baseId);
 
-  Team reactivateTeam(String baseId);
+    Team reactivateTeam(String baseId);
 
-  Boolean deleteTeam(String baseId);
+    Boolean deleteTeam(String baseId);
 
-  Boolean isTeamActive(String baseId);
+    Boolean isTeamActive(String baseId);
 
-  Boolean isTeamExists(String baseId);
+    Boolean isTeamExists(String baseId);
 
-  Team getTeamByBaseId(String baseId);
+    Team getTeamByBaseId(String baseId);
 
-  Department getDepartmentByTeamBaseId(String baseId);
+    Department getDepartmentByTeamBaseId(String baseId);
 
 
+    List<Team> getTeams();
 
-  List<Team> getTeams();
-
-  List<Team> getTeamsByDepartmentBaseId(String deptBaseId);
-
+    List<Team> getTeamsByDepartmentBaseId(String deptBaseId);
 
 
 }

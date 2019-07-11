@@ -17,10 +17,10 @@ import java.util.List;
 @NoRepositoryBean
 public interface BaseEntityRepository<T, String extends Serializable> extends JpaRepository<T, String> {
 
-  /**
-   * Gets active entity.
-   *
-   * @return the active entity
-   */
-  List<T> getActiveEntity();
+    /**
+     * Gets active entity.
+     *
+     * @return the active entity
+     */
+    List<T> getActiveEntity();
 }

@@ -1,0 +1,10 @@
+TODO:
+Job Role Controller - Completed
+Cal Holiday Controller - Completed
+Project Staffing Controller - Completed
+User Details Controller
+User Info Controller,Service Impl
+User Project Schedule Controller
+Response Entity for error, exception ,not found.
+USER_ROLES auth design entity/repo/service /controller / DTO
+Security design / API Auth enablement.

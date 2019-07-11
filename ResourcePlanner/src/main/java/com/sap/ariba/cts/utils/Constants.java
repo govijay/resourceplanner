@@ -129,14 +129,38 @@ public final class Constants {
   public static final String CITYS_CTRY_GET_URL = CITY_URL + CTRY_CODE_URL;
 
 
+  // Job Role API URL
+  public static final String JOB_ROLE_URL = "/jobroles";
+  public static final String JOB_ROLE_CODE_URL = JOB_ROLE_URL + "/{jobRoleBaseId}";
+  public static final String JOB_ROLE_STATUS_SET_URL = JOB_ROLE_CODE_URL + "/status" + "/{flag}";
+  public static final String JOB_ROLE_STATUS_GET_URL = JOB_ROLE_CODE_URL + "/status";
+  public static final String JOB_ROLE_COUNT_URL = JOB_ROLE_URL + "/count";
+
+  // Calendar Holiday API URL
+  public static final String CAL_HOLIDAYS_URL = "/calholidays";
+  public static final String CAL_HOLIDAYS_CODE_URL = CAL_HOLIDAYS_URL + "/{calHolBaseId}";
+  public static final String CAL_HOLIDAYS_STATUS_SET_URL = CAL_HOLIDAYS_CODE_URL + "/status" + "/{flag}";
+  public static final String CAL_HOLIDAYS_STATUS_GET_URL = CAL_HOLIDAYS_CODE_URL + "/status";
+  public static final String CAL_HOLIDAYS_COUNT_URL = CAL_HOLIDAYS_URL + "/count";
+
+  // Project Staffing List API URL
+  public static final String PROJECT_STAFFINGS_URL = "/pstaffings";
+  public static final String PROJECT_STAFFINGS_CODE_URL = PROJECT_STAFFINGS_URL + "/{projStaffBaseId}";
+  public static final String PROJECT_STAFFINGS_BY_CUS_URL = PROJECT_STAFFINGS_URL + "/{cusName}";
+  public static final String PROJECT_STAFFINGS_BY_REG_URL = PROJECT_STAFFINGS_URL + "/{regBaseId}";
+  public static final String PROJECT_STAFFINGS_STATUS_SET_URL = PROJECT_STAFFINGS_CODE_URL + "/status" + "/{flag}";
+  public static final String PROJECT_STAFFINGS_STATUS_GET_URL = PROJECT_STAFFINGS_CODE_URL + "/status";
+  public static final String PROJECT_STAFFINGS_COUNT_URL = PROJECT_STAFFINGS_URL + "/count";
+
+
   // USER DETAILS API URL
-  // update/ get all cities
+  // create/ update user details
   public static final String USR_DETAILS_URL = "/userdetails";
   // delete / get by baseId
-  // api url is /masterdata/cities/{cityBaseId}
+  // api url is /userdetails/{usrdBaseId}
   public static final String USR_DETAILS_CODE_URL =  "/{usrdBaseId}";
 
-  // api url is /masterdata/cities/{cityBaseId}
+  // api url is /userdetails/user/{userBaseId}
   public static final String USR_DETAILS_BY_USR_CODE_URL = "/user" + "/{userBaseId}";
 
   // api url is /masterdata/cities/count
@@ -144,5 +168,17 @@ public final class Constants {
 
 
   public static final String USERINFO = "/users";
+
+
+  // USER PROJECT SCHEDULE  API URL
+
+  public static final String UPS_DETAILS_URL = "/upschedules";
+
+  public static final String UPS_CODE_URL = "/{upscheduleBaseId}";
+
+
+
+
+
 
 }

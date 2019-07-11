@@ -23,6 +23,10 @@ public abstract class BaseDto {
     this.isActive = isActive;
   }
 
+  public BaseDto(boolean isActive) {
+    this.isActive = isActive;
+  }
+
   public String getBaseId() {
     return baseId;
   }

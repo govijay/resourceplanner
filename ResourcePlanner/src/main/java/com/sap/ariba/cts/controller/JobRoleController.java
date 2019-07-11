@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,133 +20,98 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sap.ariba.cts.model.dto.CountryDto;
-import com.sap.ariba.cts.model.dto.RegionDto;
-import com.sap.ariba.cts.model.entity.Country;
-import com.sap.ariba.cts.model.entity.Region;
-import com.sap.ariba.cts.service.impl.CountryServiceImpl;
-import com.sap.ariba.cts.service.impl.RegionServiceImpl;
+import com.sap.ariba.cts.model.dto.JobRoleDto;
+import com.sap.ariba.cts.model.entity.JobRole;
+import com.sap.ariba.cts.service.impl.JobRoleServiceImpl;
 import com.sap.ariba.cts.utils.Constants;
 
 import java.util.List;
 
-/**
- * The type Country controller.
- */
 @RestController
 @RequestMapping(path = Constants.MASTER_DATA_URL,
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
-public class CountryController {
+@CrossOrigin
+public class JobRoleController {
 
-  private static Logger logger = LoggerFactory.getLogger(CountryController.class);
+  private static Logger logger = LoggerFactory.getLogger(JobRoleController.class);
 
-
-  /**
-   * The Region service.
-   */
   @Autowired
-  RegionServiceImpl regionService;
+  JobRoleServiceImpl jobRoleService;
 
-  /**
-   * The Department service.
-   */
-  @Autowired
-  CountryServiceImpl countryService;
-
-
-  @PostMapping(path = Constants.COUNTRY_URL)
-  public ResponseEntity<CountryDto> createCountry(@Valid @RequestBody CountryDto countryDto) {
-    Country ctryCreated = countryService.createCountry(Country.toEntity(countryDto));
-    return new ResponseEntity<>(CountryDto.toDto(ctryCreated), HttpStatus.OK);
+  @PostMapping(path = Constants.JOB_ROLE_URL)
+  public ResponseEntity<JobRoleDto> createJobRole(@Valid @RequestBody JobRoleDto jobRoleDto) {
+    JobRole jobRoleCreated = jobRoleService.createJobRole(JobRole.toEntity(jobRoleDto));
+    return new ResponseEntity<>(JobRoleDto.toDto(jobRoleCreated), HttpStatus.OK);
   }
 
-  @PutMapping(path = Constants.COUNTRY_URL)
-  public ResponseEntity<CountryDto> updateCountry(@Valid @RequestBody CountryDto countryDto) {
+  @PutMapping(path = Constants.JOB_ROLE_URL)
+  public ResponseEntity<JobRoleDto> updateJobRole(@Valid @RequestBody JobRoleDto jobRoleDto) {
 
-    if (countryService.isCountryExists(countryDto.getBaseId())) {
-      Country ctryUpdated = countryService.updateCountry(Country.toEntity(countryDto));
-      return new ResponseEntity<>(CountryDto.toDto(ctryUpdated), HttpStatus.OK);
+    if (jobRoleService.isJobRoleExists(jobRoleDto.getBaseId())) {
+      JobRole jobRoleUpdated = jobRoleService.updateJobRole(JobRole.toEntity(jobRoleDto));
+      return new ResponseEntity<>(JobRoleDto.toDto(jobRoleUpdated), HttpStatus.OK);
     } else {
-      return new ResponseEntity("COUNTRY NOT FOUND", HttpStatus.NOT_FOUND);
+      return new ResponseEntity("JOB ROLE NOT FOUND", HttpStatus.NOT_FOUND);
     }
   }
 
 
-  @PatchMapping(path = Constants.CTRY_STATUS_SET_URL)
-  public ResponseEntity<CountryDto> setStatusCountry(@PathVariable(name = "ctryBaseId", required = true) @NotBlank String ctryBaseId,
+  @PatchMapping(path = Constants.JOB_ROLE_STATUS_SET_URL)
+  public ResponseEntity<JobRoleDto> setStatusJobRole(@PathVariable(name = "jobRoleBaseId", required = true) @NotBlank String jobRoleBaseId,
                                                      @PathVariable(name = "flag", required = true) boolean flag) {
-    if (countryService.isCountryExists(ctryBaseId)) {
-      Country ctryStatusUpd = null;
+    if (jobRoleService.isJobRoleExists(jobRoleBaseId)) {
+      JobRole jobRoleStatusUpd = null;
       if (!flag) {
-        ctryStatusUpd = countryService.deactivateCountry(ctryBaseId);
-        return new ResponseEntity<>(CountryDto.toDto(ctryStatusUpd), HttpStatus.OK);
+        jobRoleStatusUpd = jobRoleService.deactivateJobRole(jobRoleBaseId);
+        return new ResponseEntity<>(JobRoleDto.toDto(jobRoleStatusUpd), HttpStatus.OK);
       } else {
-        ctryStatusUpd = countryService.reactivateCountry(ctryBaseId);
-        return new ResponseEntity<>(CountryDto.toDto(ctryStatusUpd), HttpStatus.OK);
+        jobRoleStatusUpd = jobRoleService.reactivateJobRole(jobRoleBaseId);
+        return new ResponseEntity<>(JobRoleDto.toDto(jobRoleStatusUpd), HttpStatus.OK);
       }
     }
     return new ResponseEntity("COUNTRY NOT FOUND", HttpStatus.NOT_FOUND);
   }
 
-  @DeleteMapping(path = Constants.CTRY_CODE_URL)
-  public ResponseEntity<Boolean> deleteCountry(@PathVariable(name = "ctryBaseId", required = true) @NotBlank String ctryBaseId) {
-    if (countryService.isCountryExists(ctryBaseId)) {
-      return new ResponseEntity<>(countryService.deleteCountry(ctryBaseId), HttpStatus.OK);
+  @DeleteMapping(path = Constants.JOB_ROLE_CODE_URL)
+  public ResponseEntity<Boolean> deleteJobRole(@PathVariable(name = "jobRoleBaseId", required = true) @NotBlank String jobRoleBaseId) {
+    if (jobRoleService.isJobRoleExists(jobRoleBaseId)) {
+      return new ResponseEntity<>(jobRoleService.deleteJobRole(jobRoleBaseId), HttpStatus.OK);
     } else {
-      return new ResponseEntity("COUNTRY NOT FOUND", HttpStatus.NOT_FOUND);
+      return new ResponseEntity("JOB ROLE NOT FOUND", HttpStatus.NOT_FOUND);
     }
   }
 
-  @GetMapping(path = Constants.CTRY_CODE_URL)
-  public ResponseEntity<CountryDto> getCountryByBaseId(@PathVariable(name = "ctryBaseId", required = true) @NotBlank String ctryBaseId) {
+  @GetMapping(path = Constants.JOB_ROLE_CODE_URL)
+  public ResponseEntity<JobRoleDto> getJobRoleByBaseId(@PathVariable(name = "jobRoleBaseId", required = true) @NotBlank String jobRoleBaseId) {
 
-    Country country = countryService.getCountryByBaseId(ctryBaseId);
-    if (country != null) {
-      return new ResponseEntity<>(CountryDto.toDto(country), HttpStatus.OK);
+    JobRole jobRole = jobRoleService.getJobRoleByBaseId(jobRoleBaseId);
+    if (jobRole != null) {
+      return new ResponseEntity<>(JobRoleDto.toDto(jobRole), HttpStatus.OK);
     } else {
-      return new ResponseEntity("COUNTRY NOT FOUND", HttpStatus.NOT_FOUND);
+      return new ResponseEntity("JOB ROLE  NOT FOUND", HttpStatus.NOT_FOUND);
     }
   }
 
 
-  @GetMapping(path = Constants.CTRY_STATUS_GET_URL)
-  public ResponseEntity<Boolean> isCountryActive(@PathVariable(name = "ctryBaseId", required = true) @NotBlank String ctryBaseId) {
-    if (countryService.isCountryExists(ctryBaseId)) {
-      return new ResponseEntity<>(countryService.isCountryActive(ctryBaseId), HttpStatus.OK);
+  @GetMapping(path = Constants.JOB_ROLE_STATUS_GET_URL)
+  public ResponseEntity<Boolean> isJobRoleActive(@PathVariable(name = "jobRoleBaseId", required = true) @NotBlank String jobRoleBaseId) {
+    if (jobRoleService.isJobRoleExists(jobRoleBaseId)) {
+      return new ResponseEntity<>(jobRoleService.isJobRoleActive(jobRoleBaseId), HttpStatus.OK);
     } else {
-      return new ResponseEntity("COUNTRY NOT FOUND", HttpStatus.NOT_FOUND);
+      return new ResponseEntity("JOB ROLE NOT FOUND", HttpStatus.NOT_FOUND);
     }
   }
 
-  @GetMapping(path = Constants.COUNTRY_URL)
-  public ResponseEntity<List<CountryDto>> getCountries() {
-    return new ResponseEntity<>(CountryDto.toDto(countryService.getCountries()), HttpStatus.OK);
+  @GetMapping(path = Constants.JOB_ROLE_URL)
+  public ResponseEntity<List<JobRoleDto>> getJobRoles() {
+    return new ResponseEntity<>(JobRoleDto.toDto(jobRoleService.getJobRoles()), HttpStatus.OK);
   }
 
 
-  @GetMapping(path = Constants.CTRY_REGION_GET_URL)
-  public ResponseEntity<RegionDto> getRegionByCountryBaseId(@PathVariable(name = "ctryBaseId", required = true) @NotBlank String ctryBaseId) {
-    if (countryService.isCountryExists(ctryBaseId)) {
-      Region region = countryService.getRegionByCountryBaseId(ctryBaseId);
-      return new ResponseEntity<>(RegionDto.toDto(region), HttpStatus.OK);
-    } else {
-      return new ResponseEntity("COUNTRY NOT FOUND", HttpStatus.NOT_FOUND);
-    }
-  }
-
-  @GetMapping(path = Constants.CTRYS_REGION_GET_URL)
-  public ResponseEntity<List<CountryDto>> getCountriesByRegionBaseId(@PathVariable(name = "regionBaseId", required = true) @NotBlank String regionBaseId) {
-    if (regionService.isRegionExists(regionBaseId)) {
-      return new ResponseEntity<>(CountryDto.toDto(countryService.getCountriesByRegionBaseId(regionBaseId)), HttpStatus.OK);
-    } else {
-      return new ResponseEntity("Region NOT FOUND", HttpStatus.NOT_FOUND);
-    }
-  }
-
-  @GetMapping(path = Constants.CTRY_COUNT_URL)
-  public ResponseEntity getCountryCount() {
-    return new ResponseEntity<>(countryService.countCountries(), HttpStatus.OK);
+  @GetMapping(path = Constants.JOB_ROLE_COUNT_URL)
+  public ResponseEntity getJobRolesCount() {
+    return new ResponseEntity<>(jobRoleService.countJobRoles(), HttpStatus.OK);
   }
 
 }

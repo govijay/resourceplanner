@@ -14,7 +14,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sap.ariba.cts.model.base.BaseEntity;
 import com.sap.ariba.cts.model.dto.SubTeamDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
@@ -31,7 +30,6 @@ import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 @Entity
 @Table(name = "SUB_TEAMS")
 @ClassMetaProperty(code = "ST")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class SubTeam extends BaseEntity {
 
   @Id

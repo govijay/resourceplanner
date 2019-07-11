@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface CalHolidayRespository<T, String extends Serializable> extends BaseEntityRepository<CalHoliday, String> {
+public interface CalHolidayRepository<T, String extends Serializable> extends BaseEntityRepository<CalHoliday, String> {
 
   @Override
   @Query("select cal from CalHoliday cal where cal.active=true")
@@ -19,9 +19,9 @@ public interface CalHolidayRespository<T, String extends Serializable> extends B
 
   CalHoliday getCalHolidayByBaseId(String baseId);
 
-  CalHoliday getCalHolidayByCalYear(int calYear);
+  List<CalHoliday> getCalHolidayByCalYear(int calYear);
 
-  CalHoliday getCalHolidayByCountry(Country country);
+  List<CalHoliday> getCalHolidayByCountry(Country country);
 
   CalHoliday getCalHolidayByHolDate(Date holDate);
 }

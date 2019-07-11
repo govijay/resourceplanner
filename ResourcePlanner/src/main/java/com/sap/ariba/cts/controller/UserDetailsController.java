@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,18 +25,19 @@ import com.sap.ariba.cts.utils.Constants;
 import java.util.List;
 
 /**
- * The type Region controller.
+ * The type user info controller.
  */
 @RestController
 @RequestMapping(path = Constants.USR_DETAILS_URL,
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin
 public class UserDetailsController {
 
   private static Logger logger = LoggerFactory.getLogger(UserDetailsController.class);
 
   /**
-   * The Region service.
+   * The user info service.
    */
   @Autowired
   UserDetailsServiceImpl userDetailsService;

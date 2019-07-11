@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
@@ -12,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import com.sap.ariba.cts.model.base.BaseEntity;
-import com.sap.ariba.cts.model.dto.CalendarHolidayDto;
+import com.sap.ariba.cts.model.dto.CalHolidayDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
 import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 
@@ -22,7 +23,7 @@ import java.util.Date;
 @Entity
 @Table(name = "HOLIDAY")
 @ClassMetaProperty(code = "H")
-public class CalendarHoliday extends BaseEntity {
+public class CalHoliday extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "holidaySequenceGenerator")
@@ -37,7 +38,7 @@ public class CalendarHoliday extends BaseEntity {
   String baseId;
 
   @Column(name = "YEAR")
-  long calYear;
+  int calYear;
 
   @Column(name = "NAME")
   String holName;
@@ -45,13 +46,13 @@ public class CalendarHoliday extends BaseEntity {
   @Column(name = "DATE")
   Date holDate;
 
-  @Column(name = "COUNTRY")
+  @OneToOne
   Country country;
 
   /**
    * Instantiates a new Base entity.
    */
-  public CalendarHoliday() {
+  public CalHoliday() {
   }
 
   /**
@@ -59,7 +60,7 @@ public class CalendarHoliday extends BaseEntity {
    *
    * @param active the active
    */
-  public CalendarHoliday(boolean active,String baseId, long calYear, String holName, Date holDate, Country country) {
+  public CalHoliday(boolean active, String baseId, int calYear, String holName, Date holDate, Country country) {
     super(active);
     this.baseId = baseId;
     this.calYear = calYear;
@@ -76,11 +77,11 @@ public class CalendarHoliday extends BaseEntity {
     this.baseId = baseId;
   }
 
-  public long getCalYear() {
+  public int getCalYear() {
     return calYear;
   }
 
-  public void setCalYear(long calYear) {
+  public void setCalYear(int calYear) {
     this.calYear = calYear;
   }
 
@@ -116,16 +117,16 @@ public class CalendarHoliday extends BaseEntity {
     this.setActive(true);
   }
 
-  public static CalendarHoliday toEntity(CalendarHolidayDto calendarHolidayDto) {
+  public static CalHoliday toEntity(CalHolidayDto calHolidayDto) {
 
-    CalendarHoliday calendarHoliday = new CalendarHoliday(
-            calendarHolidayDto.isActive(),
-            calendarHolidayDto.getBaseId(),
-            calendarHolidayDto.getCalYear(),
-            calendarHolidayDto.getHolName(),
-            calendarHolidayDto.getHolDate(),
-            Country.toEntity(calendarHolidayDto.getCountry()));
+    CalHoliday calHoliday = new CalHoliday(
+            calHolidayDto.isActive(),
+            calHolidayDto.getBaseId(),
+            calHolidayDto.getCalYear(),
+            calHolidayDto.getHolName(),
+            calHolidayDto.getHolDate(),
+            Country.toEntity(calHolidayDto.getCountry()));
 
-    return calendarHoliday;
+    return calHoliday;
   }
 }

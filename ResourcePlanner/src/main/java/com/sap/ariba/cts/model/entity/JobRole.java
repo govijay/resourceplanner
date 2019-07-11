@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sap.ariba.cts.model.base.BaseEntity;
 import com.sap.ariba.cts.model.dto.JobRoleDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
@@ -22,7 +21,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "JOBROLES")
 @ClassMetaProperty(code = "JR")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class JobRole extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;

@@ -1,249 +1,249 @@
-countryName                                      ,countryCode,regionBaseId
-Afghanistan                                      ,AF         ,APAC
-ÅlandIslands                                     ,AX         ,EMEA
-Albania                                          ,AL         ,EMEA
-Algeria                                          ,DZ         ,EMEA
-AmericanSamoa                                    ,AS         ,APAC
-Andorra                                          ,AD         ,EMEA
-Angola                                           ,AO         ,EMEA
-Anguilla                                         ,AI         ,LATAM
-Antigua and Barbuda                              ,AG         ,LATAM
-Argentina                                        ,AR         ,LATAM
-Armenia                                          ,AM         ,APAC
-Aruba                                            ,AW         ,LATAM
-Australia                                        ,AU         ,APAC
-Austria                                          ,AT         ,EMEA
-Azerbaijan                                       ,AZ         ,APAC
-Bahamas                                          ,BS         ,LATAM
-Bahrain                                          ,BH         ,APAC
-Bangladesh                                       ,BD         ,APAC
-Barbados                                         ,BB         ,LATAM
-Belarus                                          ,BY         ,EMEA
-Belgium                                          ,BE         ,EMEA
-Belize                                           ,BZ         ,LATAM
-Benin                                            ,BJ         ,EMEA
-Bermuda                                          ,BM         ,NAMER
-Bhutan                                           ,BT         ,APAC
-Bolivia                                          ,BO         ,LATAM
-"Bonaire,Sint Eustatius and Saba"                ,BQ         ,LATAM
-Bosnia and Herzegovina                           ,BA         ,EMEA
-Botswana                                         ,BW         ,EMEA
-Bouvet Island                                    ,BV         ,LATAM
-Brazil                                           ,BR         ,LATAM
-British Indian Ocean Territory                   ,IO         ,EMEA
-Brunei Darussalam                                ,BN         ,APAC
-Bulgaria                                         ,BG         ,EMEA
-Burkina Faso                                     ,BF         ,EMEA
-Burundi                                          ,BI         ,EMEA
-Cabo Verde                                       ,CV         ,EMEA
-Cambodia                                         ,KH         ,APAC
-Cameroon                                         ,CM         ,EMEA
-Canada                                           ,CA         ,NAMER
-Cayman Islands                                   ,KY         ,LATAM
-Central African Republic                         ,CF         ,EMEA
-Chad                                             ,TD         ,EMEA
-Chile                                            ,CL         ,LATAM
-China                                            ,CN         ,APAC
-Christmas Island                                 ,CX         ,APAC
-Cocos(Keeling) Islands                           ,CC         ,APAC
-Colombia                                         ,CO         ,LATAM
-Comoros                                          ,KM         ,EMEA
-Congo                                            ,CG         ,EMEA
-"Congo, Democratic Republic of the"              ,CD         ,EMEA
-CookIslands                                      ,CK         ,APAC
-CostaRica                                        ,CR         ,LATAM
-Côted'Ivoire                                     ,CI         ,EMEA
-Croatia                                          ,HR         ,EMEA
-Cuba                                             ,CU         ,LATAM
-Curaçao                                          ,CW         ,LATAM
-Cyprus                                           ,CY         ,APAC
-Czechia                                          ,CZ         ,EMEA
-Denmark                                          ,DK         ,EMEA
-Djibouti                                         ,DJ         ,EMEA
-Dominica                                         ,DM         ,LATAM
-Dominican Republic                               ,DO         ,LATAM
-Ecuador                                          ,EC         ,LATAM
-Egypt                                            ,EG         ,EMEA
-ElSalvador                                       ,SV         ,LATAM
-EquatorialGuinea                                 ,GQ         ,EMEA
-Eritrea                                          ,ER         ,EMEA
-Estonia                                          ,EE         ,EMEA
-Eswatini                                         ,SZ         ,EMEA
-Ethiopia                                         ,ET         ,EMEA
-Falkl and Islands(Malvinas)                      ,FK         ,LATAM
-Faroe Islands                                    ,FO         ,EMEA
-Fiji                                             ,FJ         ,APAC
-Finland                                          ,FI         ,EMEA
-France                                           ,FR         ,EMEA
-French Guiana                                    ,GF         ,LATAM
-French Polynesia                                 ,PF         ,APAC
-French Southern Territories                      ,TF         ,EMEA
-Gabon                                            ,GA         ,EMEA
-Gambia                                           ,GM         ,EMEA
-Georgia                                          ,GE         ,APAC
-Germany                                          ,DE         ,EMEA
-Ghana                                            ,GH         ,EMEA
-Gibraltar                                        ,GI         ,EMEA
-Greece                                           ,GR         ,EMEA
-Greenland                                        ,GL         ,NAMER
-Grenada                                          ,GD         ,LATAM
-Guadeloupe                                       ,GP         ,LATAM
-Guam                                             ,GU         ,APAC
-Guatemala                                        ,GT         ,LATAM
-Guernsey                                         ,GG         ,EMEA
-Guinea                                           ,GN         ,EMEA
-Guinea-Bissau                                    ,GW         ,EMEA
-Guyana                                           ,GY         ,LATAM
-Haiti                                            ,HT         ,LATAM
-Heard Island and McDonald Islands                ,HM         ,APAC
-HolySee                                          ,VA         ,EMEA
-Honduras                                         ,HN         ,LATAM
-HongKong                                         ,HK         ,APAC
-Hungary                                          ,HU         ,EMEA
-Iceland                                          ,IS         ,EMEA
-India                                            ,IN         ,APAC
-Indonesia                                        ,ID         ,APAC
-Iran(IslamicRepublicof)                          ,IR         ,APAC
-Iraq                                             ,IQ         ,APAC
-Ireland                                          ,IE         ,EMEA
-IsleofMan                                        ,IM         ,EMEA
-Israel                                           ,IL         ,APAC
-Italy                                            ,IT         ,EMEA
-Jamaica                                          ,JM         ,LATAM
-Japan                                            ,JP         ,APAC
-Jersey                                           ,JE         ,EMEA
-Jordan                                           ,JO         ,APAC
-Kazakhstan                                       ,KZ         ,APAC
-Kenya                                            ,KE         ,EMEA
-Kiribati                                         ,KI         ,APAC
-"Korea(Democratic People's Republic of)"         ,KP         ,APAC
-"Korea,Republicof"                               ,KR         ,APAC
-Kuwait                                           ,KW         ,APAC
-Kyrgyzstan                                       ,KG         ,APAC
-"Lao People's Democratic Republic"               ,LA         ,APAC
-Latvia                                           ,LV         ,EMEA
-Lebanon                                          ,LB         ,APAC
-Lesotho                                          ,LS         ,EMEA
-Liberia                                          ,LR         ,EMEA
-Libya                                            ,LY         ,EMEA
-Liechtenstein                                    ,LI         ,EMEA
-Lithuania                                        ,LT         ,EMEA
-Luxembourg                                       ,LU         ,EMEA
-Macao                                            ,MO         ,APAC
-Madagascar                                       ,MG         ,EMEA
-Malawi                                           ,MW         ,EMEA
-Malaysia                                         ,MY         ,APAC
-Maldives                                         ,MV         ,APAC
-Mali                                             ,ML         ,EMEA
-Malta                                            ,MT         ,EMEA
-Marshall Islands                                 ,MH         ,APAC
-Martinique                                       ,MQ         ,LATAM
-Mauritania                                       ,MR         ,EMEA
-Mauritius                                        ,MU         ,EMEA
-Mayotte                                          ,YT         ,EMEA
-Mexico                                           ,MX         ,LATAM
-Micronesia                                       ,FM         ,APAC
-"Moldova,Republicof"                             ,MD         ,EMEA
-Monaco                                           ,MC         ,EMEA
-Mongolia                                         ,MN         ,APAC
-Montenegro                                       ,ME         ,EMEA
-Montserrat                                       ,MS         ,LATAM
-Morocco                                          ,MA         ,EMEA
-Mozambique                                       ,MZ         ,EMEA
-Myanmar                                          ,MM         ,APAC
-Namibia                                          ,NA         ,EMEA
-Nauru                                            ,NR         ,APAC
-Nepal                                            ,NP         ,APAC
-Netherlands                                      ,NL         ,EMEA
-New Caledonia                                    ,NC         ,APAC
-New Zealand                                      ,NZ         ,APAC
-Nicaragua                                        ,NI         ,LATAM
-Niger                                            ,NE         ,EMEA
-Nigeria                                          ,NG         ,EMEA
-Niue                                             ,NU         ,APAC
-Norfolk Island                                   ,NF         ,APAC
-North Macedonia                                  ,MK         ,EMEA
-Northern Mariana Islands                         ,MP         ,APAC
-Norway                                           ,NO         ,EMEA
-Oman                                             ,OM         ,APAC
-Pakistan                                         ,PK         ,APAC
-Palau                                            ,PW         ,APAC
-"Palestine,Stateof"                              ,PS         ,APAC
-Panama                                           ,PA         ,LATAM
-Papua New Guinea                                 ,PG         ,APAC
-Paraguay                                         ,PY         ,LATAM
-Peru                                             ,PE         ,LATAM
-Philippines                                      ,PH         ,APAC
-Pitcairn                                         ,PN         ,APAC
-Poland                                           ,PL         ,EMEA
-Portugal                                         ,PT         ,EMEA
-PuertoRico                                       ,PR         ,LATAM
-Qatar                                            ,QA         ,APAC
-Réunion                                          ,RE         ,EMEA
-Romania                                          ,RO         ,EMEA
-Russian Federation                               ,RU         ,EMEA
-Rwanda                                           ,RW         ,EMEA
-SaintBarthélemy                                  ,BL         ,LATAM
-"SaintHelena, Ascension and Tristanda Cunha"     ,SH         ,EMEA
-Saint Kitts and Nevis                            ,KN         ,LATAM
-Saint Lucia                                      ,LC         ,LATAM
-Saint Martin(Frenchpart)                         ,MF         ,LATAM
-Saint Pierre and Miquelon                        ,PM         ,NAMER
-Saint Vincent and theGrenadines                  ,VC         ,LATAM
-Samoa                                            ,WS         ,APAC
-San Marino                                       ,SM         ,EMEA
-SaoTome and Principe                             ,ST         ,EMEA
-SaudiArabia                                      ,SA         ,APAC
-Senegal                                          ,SN         ,EMEA
-Serbia                                           ,RS         ,EMEA
-Seychelles                                       ,SC         ,EMEA
-SierraLeone                                      ,SL         ,EMEA
-Singapore                                        ,SG         ,APAC
-Sint Maarten(Dutchpart)                          ,SX         ,LATAM
-Slovakia                                         ,SK         ,EMEA
-Slovenia                                         ,SI         ,EMEA
-Solomon Islands                                  ,SB         ,APAC
-Somalia                                          ,SO         ,EMEA
-South Africa                                     ,ZA         ,EMEA
-South Georgia and the South Sandwich Islands     ,GS         ,LATAM
-South Sudan                                      ,SS         ,EMEA
-Spain                                            ,ES         ,EMEA
-SriLanka                                         ,LK         ,APAC
-Sudan                                            ,SD         ,EMEA
-Suriname                                         ,SR         ,LATAM
-Svalbard and JanMayen                            ,SJ         ,EMEA
-Sweden                                           ,SE         ,EMEA
-Switzerland                                      ,CH         ,EMEA
-Syrian Arab Republic                             ,SY         ,APAC
-"Taiwan,ProvinceofChina"                         ,TW         ,APAC
-Tajikistan                                       ,TJ         ,APAC
-"Tanzania,UnitedRepublicof"                      ,TZ         ,EMEA
-Thailand                                         ,TH         ,APAC
-Timor-Leste                                      ,TL         ,APAC
-Togo                                             ,TG         ,EMEA
-Tokelau                                          ,TK         ,APAC
-Tonga                                            ,TO         ,APAC
-Trinidad and Tobago                              ,TT         ,LATAM
-Tunisia                                          ,TN         ,EMEA
-Turkey                                           ,TR         ,APAC
-Turkmenistan                                     ,TM         ,APAC
-Turks and Caicos Islands                         ,TC         ,LATAM
-Tuvalu                                           ,TV         ,APAC
-Uganda                                           ,UG         ,EMEA
-Ukraine                                          ,UA         ,EMEA
-United Arab Emirates                             ,AE         ,APAC
-UnitedKingdom of GreatBritain and NorthernIreland,GB         ,EMEA
-United States of America                         ,US         ,NAMER
-United States Minor Outlying Islands             ,UM         ,APAC
-Uruguay                                          ,UY         ,LATAM
-Uzbekistan                                       ,UZ         ,APAC
-Vanuatu                                          ,VU         ,APAC
-Venezuela(BolivarianRepublicof)                  ,VE         ,LATAM
-VietNam                                          ,VN         ,APAC
-Virgin Islands(British)                          ,VG         ,LATAM
-Virgin Islands(U.S.)                             ,VI         ,LATAM
-Wallis and Futuna                                ,WF         ,APAC
-Western Sahara                                   ,EH         ,EMEA
-Yemen                                            ,YE         ,APAC
-Zambia                                           ,ZM         ,EMEA
-Zimbabwe                                         ,ZW         ,EMEA
+countryName,countryCode,regionBaseId
+Afghanistan,AF,APAC
+ÅlandIslands,AX,EMEA
+Albania,AL,EMEA
+Algeria,DZ,EMEA
+AmericanSamoa,AS,APAC
+Andorra,AD,EMEA
+Angola,AO,EMEA
+Anguilla,AI,LATAM
+Antigua and Barbuda,AG,LATAM
+Argentina,AR,LATAM
+Armenia,AM,APAC
+Aruba,AW,LATAM
+Australia,AU,APAC
+Austria,AT,EMEA
+Azerbaijan,AZ,APAC
+Bahamas,BS,LATAM
+Bahrain,BH,APAC
+Bangladesh,BD,APAC
+Barbados,BB,LATAM
+Belarus,BY,EMEA
+Belgium,BE,EMEA
+Belize,BZ,LATAM
+Benin,BJ,EMEA
+Bermuda,BM,NAMER
+Bhutan,BT,APAC
+Bolivia,BO,LATAM
+"Bonaire,Sint Eustatius and Saba",BQ,LATAM
+Bosnia and Herzegovina,BA,EMEA
+Botswana,BW,EMEA
+Bouvet Island,BV,LATAM
+Brazil,BR,LATAM
+British Indian Ocean Territory,IO,EMEA
+Brunei Darussalam,BN,APAC
+Bulgaria,BG,EMEA
+Burkina Faso,BF,EMEA
+Burundi,BI,EMEA
+Cabo Verde,CV,EMEA
+Cambodia,KH,APAC
+Cameroon,CM,EMEA
+Canada,CA,NAMER
+Cayman Islands,KY,LATAM
+Central African Republic,CF,EMEA
+Chad,TD,EMEA
+Chile,CL,LATAM
+China,CN,APAC
+Christmas Island,CX,APAC
+Cocos(Keeling) Islands,CC,APAC
+Colombia,CO,LATAM
+Comoros,KM,EMEA
+Congo,CG,EMEA
+"Congo, Democratic Republic of the",CD,EMEA
+CookIslands,CK,APAC
+CostaRica,CR,LATAM
+Côted'Ivoire,CI,EMEA
+Croatia,HR,EMEA
+Cuba,CU,LATAM
+Curaçao,CW,LATAM
+Cyprus,CY,APAC
+Czechia,CZ,EMEA
+Denmark,DK,EMEA
+Djibouti,DJ,EMEA
+Dominica,DM,LATAM
+Dominican Republic,DO,LATAM
+Ecuador,EC,LATAM
+Egypt,EG,EMEA
+ElSalvador,SV,LATAM
+EquatorialGuinea,GQ,EMEA
+Eritrea,ER,EMEA
+Estonia,EE,EMEA
+Eswatini,SZ,EMEA
+Ethiopia,ET,EMEA
+Falkl and Islands(Malvinas),FK,LATAM
+Faroe Islands,FO,EMEA
+Fiji,FJ,APAC
+Finland,FI,EMEA
+France,FR,EMEA
+French Guiana,GF,LATAM
+French Polynesia,PF,APAC
+French Southern Territories,TF,EMEA
+Gabon,GA,EMEA
+Gambia,GM,EMEA
+Georgia,GE,APAC
+Germany,DE,EMEA
+Ghana,GH,EMEA
+Gibraltar,GI,EMEA
+Greece,GR,EMEA
+Greenland,GL,NAMER
+Grenada,GD,LATAM
+Guadeloupe,GP,LATAM
+Guam,GU,APAC
+Guatemala,GT,LATAM
+Guernsey,GG,EMEA
+Guinea,GN,EMEA
+Guinea-Bissau,GW,EMEA
+Guyana,GY,LATAM
+Haiti,HT,LATAM
+Heard Island and McDonald Islands,HM,APAC
+HolySee,VA,EMEA
+Honduras,HN,LATAM
+HongKong,HK,APAC
+Hungary,HU,EMEA
+Iceland,IS,EMEA
+India,IN,APAC
+Indonesia,ID,APAC
+Iran(IslamicRepublicof),IR,APAC
+Iraq,IQ,APAC
+Ireland,IE,EMEA
+IsleofMan,IM,EMEA
+Israel,IL,APAC
+Italy,IT,EMEA
+Jamaica,JM,LATAM
+Japan,JP,APAC
+Jersey,JE,EMEA
+Jordan,JO,APAC
+Kazakhstan,KZ,APAC
+Kenya,KE,EMEA
+Kiribati,KI,APAC
+"Korea(Democratic People's Republic of)",KP,APAC
+"Korea,Republicof",KR,APAC
+Kuwait,KW,APAC
+Kyrgyzstan,KG,APAC
+"Lao People's Democratic Republic",LA,APAC
+Latvia,LV,EMEA
+Lebanon,LB,APAC
+Lesotho,LS,EMEA
+Liberia,LR,EMEA
+Libya,LY,EMEA
+Liechtenstein,LI,EMEA
+Lithuania,LT,EMEA
+Luxembourg,LU,EMEA
+Macao,MO,APAC
+Madagascar,MG,EMEA
+Malawi,MW,EMEA
+Malaysia,MY,APAC
+Maldives,MV,APAC
+Mali,ML,EMEA
+Malta,MT,EMEA
+Marshall Islands,MH,APAC
+Martinique,MQ,LATAM
+Mauritania,MR,EMEA
+Mauritius,MU,EMEA
+Mayotte,YT,EMEA
+Mexico,MX,LATAM
+Micronesia,FM,APAC
+"Moldova,Republicof",MD,EMEA
+Monaco,MC,EMEA
+Mongolia,MN,APAC
+Montenegro,ME,EMEA
+Montserrat,MS,LATAM
+Morocco,MA,EMEA
+Mozambique,MZ,EMEA
+Myanmar,MM,APAC
+Namibia,NA,EMEA
+Nauru,NR,APAC
+Nepal,NP,APAC
+Netherlands,NL,EMEA
+New Caledonia,NC,APAC
+New Zealand,NZ,APAC
+Nicaragua,NI,LATAM
+Niger,NE,EMEA
+Nigeria,NG,EMEA
+Niue,NU,APAC
+Norfolk Island,NF,APAC
+North Macedonia,MK,EMEA
+Northern Mariana Islands,MP,APAC
+Norway,NO,EMEA
+Oman,OM,APAC
+Pakistan,PK,APAC
+Palau,PW,APAC
+"Palestine,Stateof",PS,APAC
+Panama,PA,LATAM
+Papua New Guinea,PG,APAC
+Paraguay,PY,LATAM
+Peru,PE,LATAM
+Philippines,PH,APAC
+Pitcairn,PN,APAC
+Poland,PL,EMEA
+Portugal,PT,EMEA
+PuertoRico,PR,LATAM
+Qatar,QA,APAC
+Réunion,RE,EMEA
+Romania,RO,EMEA
+Russian Federation,RU,EMEA
+Rwanda,RW,EMEA
+SaintBarthélemy,BL,LATAM
+"SaintHelena, Ascension and Tristanda Cunha",SH,EMEA
+Saint Kitts and Nevis,KN,LATAM
+Saint Lucia,LC,LATAM
+Saint Martin(Frenchpart),MF,LATAM
+Saint Pierre and Miquelon,PM,NAMER
+Saint Vincent and theGrenadines,VC,LATAM
+Samoa,WS,APAC
+San Marino,SM,EMEA
+SaoTome and Principe,ST,EMEA
+SaudiArabia,SA,APAC
+Senegal,SN,EMEA
+Serbia,RS,EMEA
+Seychelles,SC,EMEA
+SierraLeone,SL,EMEA
+Singapore,SG,APAC
+Sint Maarten(Dutchpart),SX,LATAM
+Slovakia,SK,EMEA
+Slovenia,SI,EMEA
+Solomon Islands,SB,APAC
+Somalia,SO,EMEA
+South Africa,ZA,EMEA
+South Georgia and the South Sandwich Islands,GS,LATAM
+South Sudan,SS,EMEA
+Spain,ES,EMEA
+SriLanka,LK,APAC
+Sudan,SD,EMEA
+Suriname,SR,LATAM
+Svalbard and JanMayen,SJ,EMEA
+Sweden,SE,EMEA
+Switzerland,CH,EMEA
+Syrian Arab Republic,SY,APAC
+"Taiwan,ProvinceofChina",TW,APAC
+Tajikistan,TJ,APAC
+"Tanzania,UnitedRepublicof",TZ,EMEA
+Thailand,TH,APAC
+Timor-Leste,TL,APAC
+Togo,TG,EMEA
+Tokelau,TK,APAC
+Tonga,TO,APAC
+Trinidad and Tobago,TT,LATAM
+Tunisia,TN,EMEA
+Turkey,TR,APAC
+Turkmenistan,TM,APAC
+Turks and Caicos Islands,TC,LATAM
+Tuvalu,TV,APAC
+Uganda,UG,EMEA
+Ukraine,UA,EMEA
+United Arab Emirates,AE,APAC
+UnitedKingdom of GreatBritain and NorthernIreland,GB,EMEA
+United States of America,US,NAMER
+United States Minor Outlying Islands,UM,APAC
+Uruguay,UY,LATAM
+Uzbekistan,UZ,APAC
+Vanuatu,VU,APAC
+Venezuela(BolivarianRepublicof),VE,LATAM
+VietNam,VN,APAC
+Virgin Islands(British),VG,LATAM
+Virgin Islands(U.S.),VI,LATAM
+Wallis and Futuna,WF,APAC
+Western Sahara,EH,EMEA
+Yemen,YE,APAC
+Zambia,ZM,EMEA
+Zimbabwe,ZW,EMEA

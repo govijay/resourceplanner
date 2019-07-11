@@ -1,17 +1,21 @@
 package com.sap.ariba.cts.model.entity;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.sap.ariba.cts.model.dto.UserInfoDto;
 
 import java.util.Date;
 
@@ -21,6 +25,8 @@ import java.util.Date;
  */
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class UserInfo {
 
   @Version
@@ -41,12 +47,6 @@ public class UserInfo {
 
   @Column(name = "EMAIL")
   private String email;
-
-  @OneToOne
-  private Country country;
-
-  @OneToOne
-  private City city;
 
   @Column(name = "CREATED_DATE")
   @Temporal(TemporalType.TIMESTAMP)
@@ -121,22 +121,6 @@ public class UserInfo {
     this.email = email;
   }
 
-  public Country getCountry() {
-    return country;
-  }
-
-  public void setCountry(Country country) {
-    this.country = country;
-  }
-
-  public City getCity() {
-    return city;
-  }
-
-  public void setCity(City city) {
-    this.city = city;
-  }
-
   public boolean isActive() {
     return active;
   }
@@ -161,5 +145,32 @@ public class UserInfo {
     this.lastModified = lastModified;
   }
 
+  /**
+   * Pre persist.
+   */
+  @PrePersist
+  public void prePersist() {
+    this.setActive(true);
+  }
 
+  @Override
+  public String toString() {
+    return "UserInfo{" +
+            "userId='" + userId + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", middleName='" + middleName + '\'' +
+            '}';
+  }
+
+  public static UserInfo toEntity(UserInfoDto userInfoDto) {
+    UserInfo userInfo =  new UserInfo(
+            userInfoDto.getUserId(),
+            userInfoDto.getFirstName(),
+            userInfoDto.getLastName(),
+            userInfoDto.getMiddleName(),
+            userInfoDto.getEmail(),
+            userInfoDto.isActive());
+    return userInfo;
+  }
 }

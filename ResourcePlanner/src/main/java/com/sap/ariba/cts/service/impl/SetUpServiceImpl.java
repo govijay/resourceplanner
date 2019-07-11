@@ -131,8 +131,6 @@ public class SetUpServiceImpl implements SetUpService {
               "",
               "admin@admin.com",
               true);
-      userInfo.setCity(cityRepo.getCityByCityCode("1840020333"));
-      userInfo.setCountry(countryRepo.getCountryByCountryCode("US"));
       userInfoRepo.save(userInfo);
       logger.info("admin user saved");
     }

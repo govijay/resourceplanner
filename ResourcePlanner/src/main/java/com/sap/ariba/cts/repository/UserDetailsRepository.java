@@ -32,12 +32,14 @@ public interface UserDetailsRepository<T, String extends Serializable> extends B
 
   UserDetails getUserDetailsByUserInfo(UserInfo userInfo);
 
-  UserDetails getUserDetailsByRegion(Region region);
+  List<UserDetails> getUserDetailsByManagerInfo(UserInfo managerInfo);
 
-  UserDetails getUserDetailsByDepartment(Department department);
+  List<UserDetails> getUserDetailsByRegion(Region region);
 
-  UserDetails getUserDetailsByTeam(Team team);
+  List<UserDetails> getUserDetailsByDepartment(Department department);
 
-  UserDetails getUserDetailsBySubTeam(SubTeam subTeam);
+  List<UserDetails> getUserDetailsByTeam(Team team);
+
+  List<UserDetails> getUserDetailsBySubTeam(SubTeam subTeam);
 
 }

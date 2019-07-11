@@ -13,7 +13,6 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sap.ariba.cts.model.base.BaseEntity;
 import com.sap.ariba.cts.model.dto.UserDetailsDto;
 import com.sap.ariba.cts.model.support.ClassMetaProperty;
@@ -22,7 +21,6 @@ import com.sap.ariba.cts.model.support.EntitySequenceNumberGenerator;
 @Entity
 @Table(name = "USER_DETAILS")
 @ClassMetaProperty(code = "USRD")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDetails extends BaseEntity {
 
   @Id
@@ -58,6 +56,17 @@ public class UserDetails extends BaseEntity {
   @OneToOne
   private JobRole jobRole;
 
+  @OneToOne
+  private Country country;
+
+  @OneToOne
+  private City city;
+
+  @OneToOne
+  private UserInfo managerInfo;
+
+
+
   /**
    * Instantiates a new Base entity.
    */
@@ -69,14 +78,20 @@ public class UserDetails extends BaseEntity {
    *
    * @param active the active
    */
-  public UserDetails(boolean active, String baseId, String userId, Region region, Department department, Team team, SubTeam subTeam) {
+  public UserDetails(boolean active, String baseId, String userId,UserInfo userInfo, Region region,
+                     Department department, Team team, SubTeam subTeam,
+                     Country country,City city,UserInfo managerInfo) {
     super(active);
     this.baseId = baseId;
     this.userId = userId;
+    this.userInfo = userInfo;
     this.region = region;
     this.department = department;
     this.team = team;
     this.subTeam = subTeam;
+    this.country = country;
+    this.city = city;
+    this.managerInfo = managerInfo;
   }
 
   public String getBaseId() {
@@ -143,6 +158,30 @@ public class UserDetails extends BaseEntity {
     this.jobRole = jobRole;
   }
 
+  public Country getCountry() {
+    return country;
+  }
+
+  public void setCountry(Country country) {
+    this.country = country;
+  }
+
+  public City getCity() {
+    return city;
+  }
+
+  public void setCity(City city) {
+    this.city = city;
+  }
+
+  public UserInfo getManagerInfo() {
+    return managerInfo;
+  }
+
+  public void setManagerInfo(UserInfo managerInfo) {
+    this.managerInfo = managerInfo;
+  }
+
   /**
    * Pre persist.
    */
@@ -156,10 +195,14 @@ public class UserDetails extends BaseEntity {
             userDetailsDto.isActive(),
             userDetailsDto.getBaseId(),
             userDetailsDto.getUserId(),
+            UserInfo.toEntity(userDetailsDto.getUserInfo()),
             Region.toEntity(userDetailsDto.getRegion()),
             Department.toEntity(userDetailsDto.getDepartment()),
             Team.toEntity(userDetailsDto.getTeam()),
-            SubTeam.toEntity(userDetailsDto.getSubTeam()));
+            SubTeam.toEntity(userDetailsDto.getSubTeam()),
+            Country.toEntity(userDetailsDto.getCountryDto()),
+            City.toEntity(userDetailsDto.getCityDto()),
+            UserInfo.toEntity(userDetailsDto.getManagerInfo()));
 
     return userDetails;
   }

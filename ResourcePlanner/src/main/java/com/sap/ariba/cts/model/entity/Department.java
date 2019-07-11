@@ -17,7 +17,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sap.ariba.cts.model.base.BaseEntity;
 import com.sap.ariba.cts.model.dto.DepartmentDto;
@@ -37,7 +36,6 @@ import java.util.Collection;
 @Entity
 @Table(name = "DEPARTMENTS")
 @ClassMetaProperty(code = "DEPT")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Department extends BaseEntity {
 
   @Id

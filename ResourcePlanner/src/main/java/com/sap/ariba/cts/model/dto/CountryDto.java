@@ -1,7 +1,6 @@
 package com.sap.ariba.cts.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.ariba.cts.model.base.BaseDto;
 import com.sap.ariba.cts.model.entity.Country;
 import com.sap.ariba.cts.model.entity.Region;
@@ -12,16 +11,12 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CountryDto extends BaseDto {
 
-  @JsonProperty("code")
   String ctryCode;
 
-  @JsonProperty("name")
   String ctryName;
 
-  @JsonProperty("region")
   RegionDto regionDto;
 
-  @JsonProperty("regionid")
   String regionBaseId;
 
   public CountryDto() {
